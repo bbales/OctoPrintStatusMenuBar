@@ -2,9 +2,7 @@
 const mb = require('menubar')({ dir: 'app/', alwaysOnTop: true, preloadWindow: true })
 
 // Prime that espresso when the menubar application is ready
-mb.on('ready', () => {
-    mb.showWindow()
-})
+mb.on('ready', () => mb.showWindow())
 
 // Hide it when the user clicks away
 // mb.on('focus-lost', () => mb.hideWindow())

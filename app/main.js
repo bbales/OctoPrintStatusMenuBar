@@ -42,6 +42,9 @@ function displayJob(json) {
     data.job = json.job
     data.progress = json.progress
     Vue.log(json)
+    setInterval(() => {
+        data.progress.filepos *= 1.05
+    }, 4000)
 }
 
 Vue.log = (...o) => console.log(...(o.map(i => i === undefined ? undefined : JSON.parse(JSON.stringify(i)))))

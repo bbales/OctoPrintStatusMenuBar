@@ -40,14 +40,11 @@
 					File Name: {{job.file.name}}<br>
 					Size: {{job.file.size | filesize}}<br>
 					Date Uploaded: {{job.file.date | moment1}}<br>
-
 					Print Time Remaining: {{progress.printTimeLeft*1000 | duration}}<br>
-					Estimated Print Time: {{progress.printTime*1000 | duration-human}}
-
-					<br><br>
+					Estimated Print Time: {{progress.printTime*1000 | duration-human}}<br>
 					Job Completion: ({{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB) {{progress.completion.toFixed(2)}}%
 
-					<progress-canvas current="93" total="100"></progress-canvas>
+					<progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
 				</div>
 				<div v-if="view == 'config'">
 					Config
