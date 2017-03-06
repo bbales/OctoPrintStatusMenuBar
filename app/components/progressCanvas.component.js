@@ -1,7 +1,7 @@
 Vue.component('progress-canvas', {
     template: `
     <div class="progress-canvas">
-        <canvas ref="can" :height="height+2" :width="width+2"></canvas>
+        <canvas ref="can" :width="width+2" :height="height+2"></canvas>
     </div>
     `,
     props: ['current', 'total'],
@@ -11,44 +11,53 @@ Vue.component('progress-canvas', {
         completion() { return this.current / this.total }
     },
     mounted() {
+        // Set up the canvas
         this.ctx = this.$refs.can.getContext('2d')
+
+        // Flip and translate
         this.ctx.rotate(Math.PI)
         this.ctx.translate(-this.width - 1, -this.height - 1)
+
+        // Animate to the current progress
         this.setProgress(true).then(() => console.log('done'))
     },
     watch: {
-        current(newVal) {
-            this.setProgress()
+        current() {
+            console.log(this.completion)
+
+            // Clear the last flashing animation
+            this.flashing = false
+
+            this.clearCanvas()
+
+            // Go to the current progress
+            window.requestAnimationFrame(() => this.setProgress())
         }
     },
     methods: {
-        clearCanvas() {
-            this.ctx.clearRect(0, 0, this.width, this.height)
-        },
+        clearCanvas() { this.ctx.clearRect(0, 0, this.width, this.height) },
+        clearCell(x, y) { this.ctx.clearRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1) },
         drawGrid() {
+            this.ctx.fillStyle = "black"
             for (let i = 0; i < this.width + 1; i += this.subSize) this.ctx.fillRect(Math.floor(i), 0, 1, this.height)
             for (let i = 0; i < this.height + 1; i += this.subSize) this.ctx.fillRect(0, Math.floor(i), this.width, 1)
         },
         fillCell(x, y, percent = 0.5) {
-            this.ctx.fillStyle = shadeBlend(percent, '#5a1bd1', '#1bd12d');
+            this.ctx.fillStyle = shadeBlend(percent, '#5a1bd1', '#1bd12d')
             this.ctx.fillRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1)
-            this.ctx.fillStyle = "black"
-        },
-        clearCell(x, y) {
-            this.ctx.clearRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1)
         },
         setProgress(animate = false) {
             this.drawGrid()
             return new Promise((res, rej) => {
-                // Calculate maximum number of cells
-                let maxCells = Math.floor(this.subs.x * this.subs.y * this.current / this.total)
-
                 // Current cursor position
-                var current = {
+                var cur = {
                     x: 0,
                     y: 0,
-                    total: () => current.y * this.subs.x + (current.y % 2 ? this.subs.x - current.x : current.x)
+                    total: () => (cur.y - 1) * this.subs.x - 1 + (cur.y % 2 ? this.subs.x - cur.x : cur.x),
+                    max: Math.floor(this.subs.x * this.subs.y * this.completion)
                 }
+
+                Vue.log(cur.total() + '', cur.max)
 
                 // Flash length in ms
                 var flashLength = 400
@@ -59,10 +68,10 @@ Vue.component('progress-canvas', {
                     if (s < 0) this.flashing = true
 
                     // Fill cell for flash length
-                    if (s > (flashLength / 1000) * 60) this.fillCell(current.x, current.y, 1)
+                    if (s > (flashLength / 1000) * 60) this.fillCell(cur.x, cur.y, 1)
 
                     // Clear cell for flash length
-                    else this.clearCell(current.x, current.y)
+                    else this.clearCell(cur.x, cur.y)
 
                     // Increment or reset flash counter
                     s = s > (flashLength / 1000) * 60 * 2 ? 0 : s + 1
@@ -74,15 +83,15 @@ Vue.component('progress-canvas', {
                 // Recursive cell painting function
                 var fillCells = () => {
                     // Fill the current cell
-                    this.fillCell(current.x, current.y, current.total() / maxCells)
+                    this.fillCell(cur.x, cur.y, cur.total() / cur.max)
 
                     // Move cursor to new cell
-                    if ((current.y % 2 && current.x == 0) || (!(current.y % 2) && current.x == this.subs.x)) current.y++;
-                    else if (current.y % 2 && current.x > 0) current.x--;
-                    else if (!(current.y % 2) && current.x < this.subs.x) current.x++;
+                    if ((cur.y % 2 && cur.x == 0) || (!(cur.y % 2) && cur.x == this.subs.x)) cur.y++;
+                    else if (cur.y % 2 && cur.x > 0) cur.x--;
+                    else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
 
                     // Recursively call this function
-                    if (current.total() < maxCells) animate /*&& current.x % 2*/ ? window.requestAnimationFrame(fillCells) : fillCells()
+                    if (cur.total() < cur.max) animate /*&& cur.x % 2*/ ? window.requestAnimationFrame(fillCells) : fillCells()
 
                     // Flash last cell async and resolve promise
                     else new Promise(() => flashCell()) && res()

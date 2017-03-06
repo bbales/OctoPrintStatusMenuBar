@@ -42,9 +42,6 @@ function displayJob(json) {
     data.job = json.job
     data.progress = json.progress
     Vue.log(json)
-    setInterval(() => {
-        data.progress.filepos *= 1.05
-    }, 4000)
 }
 
 Vue.log = (...o) => console.log(...(o.map(i => i === undefined ? undefined : JSON.parse(JSON.stringify(i)))))
@@ -52,3 +49,7 @@ Vue.log = (...o) => console.log(...(o.map(i => i === undefined ? undefined : JSO
 let temp = JSON.parse('{"job":{"averagePrintTime":null,"estimatedPrintTime":null,"filament":null,"file":{"date":1488560639,"name":"slider_sidebar_front.gcode","origin":"local","path":"slider_sidebar_front.gcode","size":1084556},"lastPrintTime":null},"progress":{"completion":74.65506622064697,"filepos":809676,"printTime":5385,"printTimeLeft":1708,"printTimeLeftOrigin":"estimate"},"state":"Printing"}')
 
 displayJob(temp)
+
+function setPercent(a) {
+    data.progress.filepos = a * data.job.file.size
+}
