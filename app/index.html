@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+
+		<script src="../node_modules/moment/min/moment.min.js"></script>
+		<script src="../node_modules/vue/dist/vue.js"></script>
+		<style>
+            body{
+                margin: 0 0;
+                background-color:white;
+            }
+
+			#app{
+				width:400px;
+				height:250px;
+				position:relative;
+			}
+
+			.tabs{
+				background-color: lightgrey;
+				position:absolute;
+				width:100%;
+				bottom:0px;
+			}
+
+			.tab{
+				display:inline-block;
+				padding: 0 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div v-if="loading">
+				<div v-if="!problem">Loading</div>
+				<div v-else>Error</div>
+			</div>
+			<div v-if="!loading && !problem">
+				<div v-if="view == 'status'">
+					File Name: {{job.file.name}}<br>
+					Size: {{job.file.size | filesize}}<br>
+					Date Uploaded: {{job.file.date | moment1}}<br>
+
+					Print Time Remaining: {{progress.printTimeLeft*1000 | duration}}<br>
+					Estimated Print Time: {{progress.printTime*1000 | duration-human}}
+
+					<br><br>
+					Job Completion: ({{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB) {{progress.completion.toFixed(2)}}%
+
+					<progress-canvas current="93" total="100"></progress-canvas>
+				</div>
+				<div v-if="view == 'config'">
+					Config
+
+					<div class="ip">
+						OctoPrint Address <input type="text">
+					</div>
+					<div class="ip">
+						API Key <input type="password">
+					</div>
+				</div>
+			</div>
+			<tabs :tabs='tabs'></tabs>
+		</div>
+
+		<!-- Classes -->
+
+		<!-- Components -->
+
+		<!-- Init -->
+		<script src="components/progressCanvas.component.js"></script>
+		<script src="components/ellipsis.component.js"></script>
+		<script src="components/tabs.component.js"></script>
+		<script src="components/globals.js"></script>
+		<script src="components/filters.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>
