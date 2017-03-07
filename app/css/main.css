@@ -29,7 +29,7 @@ body {
   border-bottom-right-radius: 5px; }
 
 .tab {
-  border-top: 1px solid red;
+  border-top: 1px solid #1bd12d;
   border-right: 2px solid #2B2B2B;
   line-height: 14px;
   cursor: pointer;
@@ -37,7 +37,7 @@ body {
   float: left;
   padding: 10px 10px; }
   .tab:active, .tab.active {
-    border-top: 1px solid blue;
+    border-top: 1px solid #5a1bd1;
     background-color: rgba(0, 0, 0, 0.2); }
 
 .box {
@@ -61,5 +61,24 @@ body {
   cursor: pointer; }
   .icon:hover {
     background-color: rgba(0, 0, 0, 0.2); }
+
+.label {
+  color: #999999;
+  width: 140px;
+  float: left;
+  margin-right: 10px;
+  padding-left: 10px;
+  line-height: 25px;
+  vertical-align: middle; }
+
+input {
+  margin-bottom: 5px;
+  width: 220px;
+  padding: 5px 5px;
+  outline: none;
+  border: none;
+  background-color: #2B2B2B;
+  font-size: 12px;
+  color: #999999; }
 
 /*# sourceMappingURL=main.css.map */

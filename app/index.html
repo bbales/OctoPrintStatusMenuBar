@@ -13,36 +13,15 @@
 				<div v-else>Error</div>
 			</div>
 			<div v-if="!loading && !problem">
-				<div v-if="view == 'status'">
-					<div class="box" style="width:30%">
-						<span class="dark">Status:</span> {{status}}<ellipsis v-show="status == 'Printing'"><ellipsis>
-					</div>
-					<div class="box" style="width:62%">
-						<span class="dark">File Name:</span> {{job.file.name}}<br>
-					</div>
-					<div class="box no-right-border icon" style="width:8%">
-						<img src="icon.png" width="14" alt="">
-					</div>
-					<div class="box" style="width:65%;height:123px;">
-						<span class="dark">Size:</span> {{job.file.size | filesize}}<br>
-						<span class="dark">Date Uploaded:</span> {{job.file.date | moment1}}<br><br>
-						<span class="dark">Time Remaining:</span> {{progress.printTimeLeft*1000 | duration-human}}<br>
-						<span class="dark">Estimated Print Time:</span> {{progress.printTime*1000 | duration-human}}<br>
-						<span class="dark">Job Completion:</span> {{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB ({{progress.completion.toFixed(2)}}%)
-					</div>
-					<div class="box no-right-border" style="width:35%">
-						<progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
-						<!-- <progress-canvas :current="job.file.size" :total="job.file.size"></progress-canvas> -->
-					</div>
-				</div>
-				<div v-if="view == 'config'">
-					Config
+				<status v-if="view == 'status'" :job="job" :status="status" :progress="progress"></status>
+				<div v-if="view == 'setup'" class="setup">
+					<div class="box no-right-border" style="width:100%; margin-bottom:10px;">Setup</div>
 
 					<div class="ip">
-						OctoPrint Address <input type="text">
+						<div class="label">OctoPrint Address</div> <input type="text">
 					</div>
 					<div class="ip">
-						API Key <input type="password">
+						<div class="label">API Key</div> <input type="password">
 					</div>
 				</div>
 			</div>
@@ -52,6 +31,7 @@
 		<!-- Classes -->
 
 		<!-- Components -->
+		<script src="components/status.component.js"></script>
 		<script src="components/pauseResumeStop.component.js"></script>
 		<script src="components/progressCanvas.component.js"></script>
 		<script src="components/ellipsis.component.js"></script>

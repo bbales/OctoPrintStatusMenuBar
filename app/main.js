@@ -11,7 +11,11 @@ const data = {
         label: 'Status',
         icon: 'fa-tasks'
     }, {
-        name: 'config',
+        name: 'files',
+        label: 'Files',
+        icon: 'fa-file'
+    }, {
+        name: 'setup',
         label: '',
         icon: 'fa-cog'
     }, ]

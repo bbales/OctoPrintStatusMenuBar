@@ -39,7 +39,7 @@ body{
 }
 
 .tab{
-    border-top:1px solid red;
+    border-top:1px solid #1bd12d;
     border-right:2px solid $light-bg;
     line-height:14px;
     cursor:pointer;
@@ -48,7 +48,7 @@ body{
     padding: 10px 10px;
 
     &:active, &.active{
-        border-top:1px solid blue;
+        border-top:1px solid #5a1bd1;
         background-color:rgba(0,0,0,0.2)
     }
 }
@@ -88,4 +88,25 @@ body{
     &:hover{
         background-color:rgba(0,0,0,0.2)
     }
+}
+
+.label{
+    color:$dark-text;
+    width:140px;
+    float:left;
+    margin-right:10px;
+    padding-left:10px;
+    line-height:25px;
+    vertical-align: middle;
+}
+
+input{
+    margin-bottom:5px;
+    width:220px;
+    padding:5px 5px;
+    outline:none;
+    border:none;
+    background-color:$light-bg;
+    font-size:12px;
+    color:$dark-text;
 }
