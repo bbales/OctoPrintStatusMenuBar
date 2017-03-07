@@ -61,7 +61,8 @@ body {
     float: left; }
 
 .icon {
-  cursor: pointer; }
+  cursor: pointer !important;
+  background-image: url("icon.png"); }
   .icon:hover {
     background-color: rgba(0, 0, 0, 0.2); }
 

@@ -8,8 +8,8 @@ Vue.component('status', {
         <div class="box" style="width:62%">
             <span class="dark">File Name:</span> {{job.file.name}}<br>
         </div>
-        <div class="box no-right-border icon" style="width:8%">
-            <img src="icon.png" width="14" alt="">
+        <div class="box no-right-border icon" style="width:8%" @click="openLink()">
+            <img src="icon.png" style="cursor:pointer;" width="14" alt="">
         </div>
         <div class="box" style="width:65%;height:123px;">
             <span class="dark">Size:</span> {{job.file.size | filesize}}<br>
@@ -24,5 +24,10 @@ Vue.component('status', {
         </div>
         <pause-resume-stop></pause-resume-stop>
     </div>
-    `
+    `,
+    methods: {
+        openLink() {
+            openInBrowser(Api.url)
+        }
+    }
 })

@@ -52,3 +52,8 @@ displayFiles(files)
 function setPercent(a) {
     data.progress.filepos = a * data.job.file.size
 }
+
+function openInBrowser(url) {
+    const { ipcRenderer } = require('electron')
+    ipcRenderer.send('open-in-browser', url)
+}

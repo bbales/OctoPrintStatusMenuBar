@@ -15,12 +15,12 @@ class Api {
     }
 
     static getJob() {
-        var jobRequest = new Request(this.url + 'api/job', { headers: this.headers, mode: 'cors' })
+        var jobRequest = new Request(this.url + '/api/job', { headers: this.headers, mode: 'cors' })
         return fetch(jobRequest).then(r => r.json())
     }
 
     static getFiles() {
-        var jobRequest = new Request(this.url + 'api/files', { headers: this.headers, mode: 'cors' })
-        return fetch(jobRequest).then(r => r.json())
+        var filesRequest = new Request(this.url + '/api/files', { headers: this.headers, mode: 'cors' })
+        return fetch(filesRequest).then(r => r.json())
     }
 }
