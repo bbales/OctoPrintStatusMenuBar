@@ -7,6 +7,9 @@ body {
   font-size: 12px;
   margin: 0 0; }
 
+.light-bg {
+  background-color: rgba(0, 0, 0, 0.2); }
+
 .dark {
   color: #999999; }
 
@@ -80,5 +83,54 @@ input {
   background-color: #2B2B2B;
   font-size: 12px;
   color: #999999; }
+
+.scroller {
+  height: 178px;
+  overflow: auto;
+  width: 98%; }
+
+.pause-resume-stop div {
+  border-top: 1px solid #1bd12d;
+  cursor: pointer;
+  padding: 7px 7px;
+  width: 26px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: red;
+  float: left;
+  margin-right: 3px;
+  background-color: rgba(0, 0, 0, 0.2); }
+  .pause-resume-stop div:active {
+    border-top: 1px solid #5a1bd1;
+    background-color: rgba(0, 0, 0, 0.4); }
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px; }
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px; }
+
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px; }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffffff; }
+  ::-webkit-scrollbar-thumb:active {
+    background: #000000; }
+
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 50px; }
+  ::-webkit-scrollbar-track:hover {
+    background: #666666; }
+  ::-webkit-scrollbar-track:active {
+    background: #333333; }
+
+::-webkit-scrollbar-corner {
+  background: transparent; }
 
 /*# sourceMappingURL=main.css.map */
