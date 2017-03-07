@@ -15,17 +15,20 @@
 			<div v-if="!loading && !problem">
 				<div v-if="view == 'status'">
 					<div class="box" style="width:30%">
-						Status: {{status}}<ellipsis v-show="status == 'Printing'"><ellipsis>
+						<span class="dark">Status:</span> {{status}}<ellipsis v-show="status == 'Printing'"><ellipsis>
 					</div>
-					<div class="box no-right-border" style="width:70%">
-						File Name: {{job.file.name}}<br>
+					<div class="box" style="width:62%">
+						<span class="dark">File Name:</span> {{job.file.name}}<br>
 					</div>
-					<div class="box" style="width:65%">
-						Size: {{job.file.size | filesize}}<br>
-						Date Uploaded: {{job.file.date | moment1}}<br>
-						Print Time Remaining: {{progress.printTimeLeft*1000 | duration}}<br>
-						Estimated Print Time: {{progress.printTime*1000 | duration-human}}<br>
-						Job Completion: ({{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB) {{progress.completion.toFixed(2)}}%
+					<div class="box no-right-border icon" style="width:8%">
+						<img src="icon.png" width="14" alt="">
+					</div>
+					<div class="box" style="width:65%;height:123px;">
+						<span class="dark">Size:</span> {{job.file.size | filesize}}<br>
+						<span class="dark">Date Uploaded:</span> {{job.file.date | moment1}}<br><br>
+						<span class="dark">Time Remaining:</span> {{progress.printTimeLeft*1000 | duration-human}}<br>
+						<span class="dark">Estimated Print Time:</span> {{progress.printTime*1000 | duration-human}}<br>
+						<span class="dark">Job Completion:</span> {{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB ({{progress.completion.toFixed(2)}}%)
 					</div>
 					<div class="box no-right-border" style="width:35%">
 						<progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>

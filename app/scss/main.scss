@@ -1,6 +1,7 @@
 $light-bg : #2B2B2B;
 $bg : #191919;
 $text : #E5E5E5;
+$dark-text : #999999;
 
 *{
   box-sizing: border-box;
@@ -11,6 +12,10 @@ body{
     font-family: Helvetica, sans-serif;
     font-size: 12px;
     margin: 0 0;
+}
+
+.dark{
+    color:$dark-text;
 }
 
 #app{
@@ -74,5 +79,13 @@ body{
     &.w70{
         width:70%;
         float:left;
+    }
+}
+
+.icon{
+    cursor:pointer;
+
+    &:hover{
+        background-color:rgba(0,0,0,0.2)
     }
 }

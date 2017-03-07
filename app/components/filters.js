@@ -24,6 +24,6 @@ Vue.filter('duration-human', value => {
     let minutes = tempTime.minutes()
     let seconds = tempTime.seconds()
     if (hours > 0) return hours + ' hour' + (hours > 1 ? 's ' : ' ') + minutes + ' minute' + (minutes > 1 ? 's ' : ' ')
-    else if (minutes > 0) return minutes + ' minute' + (minutes > 1 ? 's ' : ' ') + seconds + 'second' + (seconds > 1 ? 's ' : ' ')
+    else if (minutes > 0) return minutes + ' minute' + (minutes > 1 ? 's ' : ' ') + seconds + ' second' + (seconds > 1 ? 's ' : ' ')
     else return seconds + ' second' + (seconds > 1 ? 's ' : ' ')
 })

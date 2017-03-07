@@ -7,6 +7,9 @@ body {
   font-size: 12px;
   margin: 0 0; }
 
+.dark {
+  color: #999999; }
+
 #app {
   background-color: #191919;
   color: #E5E5E5;
@@ -53,5 +56,10 @@ body {
   .box.w70 {
     width: 70%;
     float: left; }
+
+.icon {
+  cursor: pointer; }
+  .icon:hover {
+    background-color: rgba(0, 0, 0, 0.2); }
 
 /*# sourceMappingURL=main.css.map */
