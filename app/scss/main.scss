@@ -128,8 +128,7 @@ input{
         padding:7px 7px;
         width:26px;
         text-align:center;
-        border-radius:4px;
-        background-color:red;
+        // border-radius:4px;
         float:left;
         margin-right:3px;
         background-color:rgba(0,0,0,0.2);
@@ -137,6 +136,7 @@ input{
         &:active{
             border-top:1px solid #5a1bd1;
             background-color:rgba(0,0,0,0.4);
+            color:$dark-text;
         }
     }
 }

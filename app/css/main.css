@@ -95,14 +95,13 @@ input {
   padding: 7px 7px;
   width: 26px;
   text-align: center;
-  border-radius: 4px;
-  background-color: red;
   float: left;
   margin-right: 3px;
   background-color: rgba(0, 0, 0, 0.2); }
   .pause-resume-stop div:active {
     border-top: 1px solid #5a1bd1;
-    background-color: rgba(0, 0, 0, 0.4); }
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #999999; }
 
 ::-webkit-scrollbar {
   width: 3px;

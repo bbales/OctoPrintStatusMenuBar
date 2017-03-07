@@ -14,24 +14,17 @@
 			</div>
 			<div v-if="!loading && !problem">
 				<status v-if="view == 'status'" :job="job" :status="status" :progress="progress"></status>
-				<div v-if="view == 'setup'" class="setup">
-					<div class="box no-right-border" style="width:100%; margin-bottom:10px;">Setup</div>
-
-					<div class="ip">
-						<div class="label">OctoPrint Address</div> <input type="text">
-					</div>
-					<div class="ip">
-						<div class="label">API Key</div> <input type="password">
-					</div>
-				</div>
+				<setup v-if="view == 'setup'"></setup>
 				<files v-if="view == 'files'" :files="files"></files>
 			</div>
 			<tabs :tabs='tabs'></tabs>
 		</div>
 
 		<!-- Classes -->
+		<script src="classes/api.class.js"></script>
 
 		<!-- Components -->
+		<script src="components/setup.component.js"></script>
 		<script src="components/files.component.js"></script>
 		<script src="components/status.component.js"></script>
 		<script src="components/pauseResumeStop.component.js"></script>
