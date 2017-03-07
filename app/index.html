@@ -1,33 +1,10 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/main.css">
 
 		<script src="../node_modules/moment/min/moment.min.js"></script>
 		<script src="../node_modules/vue/dist/vue.js"></script>
-		<style>
-            body{
-                margin: 0 0;
-                background-color:white;
-            }
-
-			#app{
-				width:400px;
-				height:250px;
-				position:relative;
-			}
-
-			.tabs{
-				background-color: lightgrey;
-				position:absolute;
-				width:100%;
-				bottom:0px;
-			}
-
-			.tab{
-				display:inline-block;
-				padding: 0 10px;
-			}
-		</style>
 	</head>
 	<body>
 		<div id="app">
@@ -63,11 +40,12 @@
 		<!-- Classes -->
 
 		<!-- Components -->
-
-		<!-- Init -->
+		<script src="components/pauseResumeStop.component.js"></script>
 		<script src="components/progressCanvas.component.js"></script>
 		<script src="components/ellipsis.component.js"></script>
 		<script src="components/tabs.component.js"></script>
+
+		<!-- Init -->
 		<script src="components/globals.js"></script>
 		<script src="components/filters.js"></script>
 		<script src="main.js"></script>

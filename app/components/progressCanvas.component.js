@@ -23,12 +23,8 @@ Vue.component('progress-canvas', {
     },
     watch: {
         current() {
-            console.log(this.completion)
-
             // Clear the last flashing animation
             this.flashing = false
-
-            this.clearCanvas()
 
             // Go to the current progress
             window.requestAnimationFrame(() => this.setProgress())
@@ -47,6 +43,7 @@ Vue.component('progress-canvas', {
             this.ctx.fillRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1)
         },
         setProgress(animate = false) {
+            this.clearCanvas()
             this.drawGrid()
             return new Promise((res, rej) => {
                 // Current cursor position
@@ -56,8 +53,6 @@ Vue.component('progress-canvas', {
                     total: () => (cur.y - 1) * this.subs.x - 1 + (cur.y % 2 ? this.subs.x - cur.x : cur.x),
                     max: Math.floor(this.subs.x * this.subs.y * this.completion)
                 }
-
-                Vue.log(cur.total() + '', cur.max)
 
                 // Flash length in ms
                 var flashLength = 400

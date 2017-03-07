@@ -16,8 +16,6 @@ const data = {
     }, ]
 }
 
-
-
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 

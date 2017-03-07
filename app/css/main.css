@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box; }
+
+body {
+  background-color: #2B2B2B;
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  margin: 0 0; }
+
+#app {
+  background-color: #191919;
+  color: #E5E5E5;
+  width: 400px;
+  height: 250px;
+  position: relative;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px; }
+
+.tabs {
+  border-top: 2px solid #2B2B2B;
+  background-color: #191919;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px; }
+
+.tab {
+  border-top: 1px solid red;
+  border-right: 2px solid #2B2B2B;
+  line-height: 14px;
+  cursor: pointer;
+  height: auto;
+  float: left;
+  padding: 10px 10px; }
+  .tab:active, .tab.active {
+    border-top: 1px solid blue;
+    background-color: rgba(0, 0, 0, 0.15); }
+
+/*# sourceMappingURL=main.css.map */

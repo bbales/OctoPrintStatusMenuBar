@@ -1,9 +1,4 @@
 //
-// Directives
-//
-
-
-//
 // Protos
 //
 
@@ -11,22 +6,10 @@ String.prototype.capFirst = function() {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
-String.prototype.insertAt = function(i, s) {
-    return this.substr(0, i) + s + this.substr(i)
-}
-
 Number.prototype.pad = function(size) {
     var s = String(this);
     while (s.length < (size || 2)) { s = "0" + s; }
     return s;
-}
-
-Number.prototype.execN = function(fn) {
-    for (var i = 0; i < this; i++) fn()
-}
-
-Function.prototype.times = function(n) {
-    for (var i = 0; i < n; i++) this()
 }
 
 function shadeBlend(p, c0, c1) {

@@ -1,0 +1,49 @@
+$light-bg : #2B2B2B;
+$bg : #191919;
+$text : #E5E5E5;
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+    background-color: $light-bg;
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    margin: 0 0;
+}
+
+#app{
+    background-color:$bg;
+    color:$text;
+    width:400px;
+    height:250px;
+    position:relative;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.tabs{
+    border-top:2px solid $light-bg;
+    background-color: $bg;
+    position:absolute;
+    width:100%;
+    bottom:0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.tab{
+    border-top:1px solid red;
+    border-right:2px solid $light-bg;
+    line-height:14px;
+    cursor:pointer;
+    height:auto;
+    float:left;
+    padding: 10px 10px;
+
+    &:active, &.active{
+        border-top:1px solid blue;
+        background-color:rgba(0,0,0,0.15)
+    }
+}
