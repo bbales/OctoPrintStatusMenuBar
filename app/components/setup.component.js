@@ -18,12 +18,12 @@ Vue.component('setup', {
     },
     methods: {
         save() {
-            localStorage.setItem('api-key', this.apiKey)
-            localStorage.setItem('url', this.url)
+            Api.apiKey = this.apiKey
+            Api.url = this.url
         },
         retrieve() {
-            this.url = localStorage.getItem('url')
-            this.apiKey = localStorage.getItem('api-key')
+            this.url = Api.url
+            this.apiKey = Api.apiKey
         }
     }
 })

@@ -3,8 +3,16 @@ class Api {
         return localStorage.getItem('api-key')
     }
 
+    static set apiKey(v) {
+        localStorage.setItem('api-key', v)
+    }
+
     static get url() {
         return localStorage.getItem('url')
+    }
+
+    static set url(v) {
+        localStorage.setItem('url', v)
     }
 
     static get headers() {

@@ -1,7 +1,6 @@
 const { ipcMain } = require('electron')
 ipcMain.on('open-in-browser', (event, arg) => {
     const { shell } = require('electron')
-    console.log(arg)
     if (arg !== null) shell.openExternal(arg)
 })
 
