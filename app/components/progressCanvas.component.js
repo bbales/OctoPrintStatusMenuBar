@@ -1,11 +1,11 @@
 Vue.component('progress-canvas', {
     template: `
     <div class="progress-canvas">
-        <canvas ref="can" :width="width+2" :height="height+2"></canvas>
+        <canvas ref="can" :width="width+45+2" :height="height+2"></canvas>
     </div>
     `,
     props: ['current', 'total'],
-    data: () => ({ height: 100, width: 50, subSize: 5, flashing: false }),
+    data: () => ({ height: 100, width: 70, subSize: 5, flashing: false }),
     computed: {
         subs() { return { x: Math.floor((this.width - 1) / this.subSize), y: Math.floor((this.height - 1) / this.subSize) } },
         completion() { return this.current / this.total }
@@ -31,16 +31,34 @@ Vue.component('progress-canvas', {
         }
     },
     methods: {
-        clearCanvas() { this.ctx.clearRect(0, 0, this.width, this.height) },
+        clearCanvas() { this.ctx.clearRect(0, 0, this.width + 2, this.height + 2) },
         clearCell(x, y) { this.ctx.clearRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1) },
         drawGrid() {
-            this.ctx.fillStyle = "black"
+            this.ctx.fillStyle = "#2B2B2B"
             for (let i = 0; i < this.width + 1; i += this.subSize) this.ctx.fillRect(Math.floor(i), 0, 1, this.height)
             for (let i = 0; i < this.height + 1; i += this.subSize) this.ctx.fillRect(0, Math.floor(i), this.width, 1)
         },
         fillCell(x, y, percent = 0.5) {
             this.ctx.fillStyle = shadeBlend(percent, '#5a1bd1', '#1bd12d')
             this.ctx.fillRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1)
+        },
+        drawText(y, percent) {
+            // Flip and translate
+            this.ctx.rotate(Math.PI)
+            this.ctx.translate(-this.width - 1, -this.height - 1)
+
+            this.ctx.clearRect(this.width + 1, this.height * 3, 45 + 2, -this.height * 3)
+
+            this.ctx.fillStyle = 'white'
+            this.ctx.font = "10px Helvetica"
+            this.ctx.fillText((100 * percent).toFixed(2) + '%', this.width + 7, y + (percent > 0.7 ? 13 : -1))
+
+            this.ctx.fillStyle = "#2B2B2B"
+            this.ctx.fillRect(this.width, y + 2, 41, 1)
+
+            // Flip and translate
+            this.ctx.rotate(Math.PI)
+            this.ctx.translate(-this.width - 1, -this.height - 1)
         },
         setProgress(animate = false) {
             this.clearCanvas()
@@ -84,6 +102,8 @@ Vue.component('progress-canvas', {
                     if ((cur.y % 2 && cur.x == 0) || (!(cur.y % 2) && cur.x == this.subs.x)) cur.y++;
                     else if (cur.y % 2 && cur.x > 0) cur.x--;
                     else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
+
+                    this.drawText(this.height - 2 - cur.y * this.subSize, this.completion * cur.total() / cur.max)
 
                     // Recursively call this function
                     if (cur.total() < cur.max) animate /*&& cur.x % 2*/ ? window.requestAnimationFrame(fillCells) : fillCells()

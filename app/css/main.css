@@ -35,6 +35,23 @@ body {
   padding: 10px 10px; }
   .tab:active, .tab.active {
     border-top: 1px solid blue;
-    background-color: rgba(0, 0, 0, 0.15); }
+    background-color: rgba(0, 0, 0, 0.2); }
+
+.box {
+  border-bottom: 1px solid #2B2B2B;
+  border-right: 1px solid #2B2B2B;
+  padding: 10px 10px;
+  float: left; }
+  .box.w30 {
+    width: 30%; }
+  .box.w40 {
+    width: 40%; }
+  .box.w60 {
+    width: 60%; }
+  .box.no-right-border {
+    border-right: 0px; }
+  .box.w70 {
+    width: 70%;
+    float: left; }
 
 /*# sourceMappingURL=main.css.map */

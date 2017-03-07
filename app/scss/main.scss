@@ -44,6 +44,35 @@ body{
 
     &:active, &.active{
         border-top:1px solid blue;
-        background-color:rgba(0,0,0,0.15)
+        background-color:rgba(0,0,0,0.2)
+    }
+}
+
+.box{
+    $box-border : 1px solid $light-bg;
+    border-bottom:$box-border;
+    border-right:$box-border;
+    padding:10px 10px;
+    float:left;
+
+    &.w30{
+        width:30%;
+    }
+
+    &.w40{
+        width:40%;
+    }
+
+    &.w60{
+        width:60%;
+    }
+
+    &.no-right-border{
+        border-right: 0px;
+    }
+
+    &.w70{
+        width:70%;
+        float:left;
     }
 }

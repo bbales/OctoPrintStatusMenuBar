@@ -2,6 +2,7 @@
 const data = {
     job: {},
     progress: {},
+    status: '',
     view: 'status',
     loading: true,
     problem: false,
@@ -38,6 +39,7 @@ function displayJob(json) {
     data.loading = false
     data.problem = false
     data.job = json.job
+    data.status = json.state
     data.progress = json.progress
     Vue.log(json)
 }

@@ -14,14 +14,23 @@
 			</div>
 			<div v-if="!loading && !problem">
 				<div v-if="view == 'status'">
-					File Name: {{job.file.name}}<br>
-					Size: {{job.file.size | filesize}}<br>
-					Date Uploaded: {{job.file.date | moment1}}<br>
-					Print Time Remaining: {{progress.printTimeLeft*1000 | duration}}<br>
-					Estimated Print Time: {{progress.printTime*1000 | duration-human}}<br>
-					Job Completion: ({{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB) {{progress.completion.toFixed(2)}}%
-
-					<progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
+					<div class="box" style="width:30%">
+						Status: {{status}}<ellipsis v-show="status == 'Printing'"><ellipsis>
+					</div>
+					<div class="box no-right-border" style="width:70%">
+						File Name: {{job.file.name}}<br>
+					</div>
+					<div class="box" style="width:65%">
+						Size: {{job.file.size | filesize}}<br>
+						Date Uploaded: {{job.file.date | moment1}}<br>
+						Print Time Remaining: {{progress.printTimeLeft*1000 | duration}}<br>
+						Estimated Print Time: {{progress.printTime*1000 | duration-human}}<br>
+						Job Completion: ({{(progress.filepos/1024).toFixed(0)}}/{{(job.file.size/1024).toFixed(0)}}KB) {{progress.completion.toFixed(2)}}%
+					</div>
+					<div class="box no-right-border" style="width:35%">
+						<progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
+						<!-- <progress-canvas :current="job.file.size" :total="job.file.size"></progress-canvas> -->
+					</div>
 				</div>
 				<div v-if="view == 'config'">
 					Config
