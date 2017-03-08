@@ -22,7 +22,7 @@ Vue.component('status', {
             <progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
             <!-- <progress-canvas :current="job.file.size" :total="job.file.size"></progress-canvas> -->
         </div>
-        <pause-resume-stop></pause-resume-stop>
+        <pause-resume-stop :state="status"></pause-resume-stop>
     </div>
     `,
     methods: {

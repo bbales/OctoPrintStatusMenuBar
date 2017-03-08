@@ -9,9 +9,7 @@ Vue.filter('filesize', value => {
     return format(value, i - 1)
 })
 
-Vue.filter('moment1', value => {
-    return moment(value).format('MMM Do YY, h:mma')
-})
+Vue.filter('moment1', value => moment(value).format('MMM Do YY, h:mma'))
 
 Vue.filter('duration', value => {
     let tempTime = moment.duration(value)

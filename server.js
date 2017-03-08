@@ -1,4 +1,6 @@
 const { ipcMain } = require('electron')
+
+// Open external URL
 ipcMain.on('open-in-browser', (event, arg) => {
     const { shell } = require('electron')
     if (arg !== null) shell.openExternal(arg)

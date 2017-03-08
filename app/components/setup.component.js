@@ -7,9 +7,11 @@ Vue.component('setup', {
         <div class="ip">
             <div class="label">OctoPrint Address</div> <input type="text" v-model="url">
         </div>
+
         <div class="ip">
             <div class="label">API Key</div> <input type="password" v-model="apiKey">
         </div>
+
         <button @click="save()">Save</button>
     </div>
     `,

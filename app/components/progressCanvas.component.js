@@ -51,7 +51,7 @@ Vue.component('progress-canvas', {
 
             this.ctx.fillStyle = 'white'
             this.ctx.font = "10px Helvetica"
-            this.ctx.fillText((100 * percent).toFixed(2) + '%', this.width + 7, y + (percent > 0.7 ? 13 : -1))
+            this.ctx.fillText((100 * percent).toFixed(2) + '%', this.width + 7, y + (percent > 0.9 ? 13 : -1))
 
             this.ctx.fillStyle = "#2B2B2B"
             this.ctx.fillRect(this.width, y + 2, 41, 1)
@@ -69,7 +69,8 @@ Vue.component('progress-canvas', {
                     x: 0,
                     y: 0,
                     total: () => (cur.y - 1) * this.subs.x - 1 + (cur.y % 2 ? this.subs.x - cur.x : cur.x),
-                    max: Math.floor(this.subs.x * this.subs.y * this.completion)
+                    max: Math.floor(this.subs.x * this.subs.y * this.completion),
+                    ratio: () => cur.total() / cur.max
                 }
 
                 // Flash length in ms
@@ -96,17 +97,17 @@ Vue.component('progress-canvas', {
                 // Recursive cell painting function
                 var fillCells = () => {
                     // Fill the current cell
-                    this.fillCell(cur.x, cur.y, cur.total() / cur.max)
+                    this.fillCell(cur.x, cur.y, cur.ratio())
 
                     // Move cursor to new cell
                     if ((cur.y % 2 && cur.x == 0) || (!(cur.y % 2) && cur.x == this.subs.x)) cur.y++;
                     else if (cur.y % 2 && cur.x > 0) cur.x--;
                     else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
 
-                    this.drawText(this.height - 2 - cur.y * this.subSize, this.completion * cur.total() / cur.max)
+                    this.drawText(this.height - 2 - cur.y * this.subSize, this.completion * cur.ratio())
 
                     // Recursively call this function
-                    if (cur.total() < cur.max) animate /*&& cur.x % 2*/ ? window.requestAnimationFrame(fillCells) : fillCells()
+                    if (cur.total() < cur.max) animate && cur.x % 2 == 0 ? window.requestAnimationFrame(fillCells) : fillCells()
 
                     // Flash last cell async and resolve promise
                     else new Promise(() => flashCell()) && res()
