@@ -1,10 +1,7 @@
-const { ipcMain } = require('electron')
+const { ipcMain, shell } = require('electron')
 
 // Open external URL
-ipcMain.on('open-in-browser', (event, arg) => {
-    const { shell } = require('electron')
-    if (arg !== null) shell.openExternal(arg)
-})
+ipcMain.on('open-in-browser', (event, arg) => arg !== null && shell.openExternal(arg))
 
 // Create the menubar app
 const mb = require('menubar')({ dir: 'app/', alwaysOnTop: true, preloadWindow: true, height: 250, icon: 'app/icon.png' })

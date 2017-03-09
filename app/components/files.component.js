@@ -6,5 +6,10 @@ Vue.component('files', {
             <div class="box no-right-border light-bg" style="width:100%;" v-for="f in $root.files">{{f.name}}</div>
         </div>
     </div>
-    `
+    `,
+    mounted() {
+        Api.getFiles(this.$root).then(f => {
+            console.log('got files')
+        })
+    }
 })
