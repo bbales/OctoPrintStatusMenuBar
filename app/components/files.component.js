@@ -8,8 +8,6 @@ Vue.component('files', {
     </div>
     `,
     mounted() {
-        Api.getFiles(this.$root).then(f => {
-            console.log('got files')
-        })
+        Api.getFiles(this.$root).then(f => {})
     }
 })

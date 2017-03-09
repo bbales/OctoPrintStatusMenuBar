@@ -55,4 +55,16 @@ class Api {
             return data.files
         }
     }
+
+    static sendJobCommand(command) {
+
+    }
+
+    static printFile(file) {
+
+    }
+
+    static deleteFile(file) {
+
+    }
 }

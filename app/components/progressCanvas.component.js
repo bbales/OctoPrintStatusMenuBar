@@ -19,8 +19,9 @@ Vue.component('progress-canvas', {
         this.ctx.translate(-this.width - 1, -this.height - 1)
 
         // Animate to the current progress
-        this.setProgress(true).then(() => console.log('done'))
+        this.setProgress(true).then(() => {})
     },
+    destroyed() { this.flashing = false },
     watch: {
         current() {
             // Clear the last flashing animation

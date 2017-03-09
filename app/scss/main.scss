@@ -88,7 +88,6 @@ body{
 
 .icon{
     cursor:pointer !important;
-    background-image: url('icon.png');
 
     &:hover{
         background-color:rgba(0,0,0,0.2);
@@ -129,7 +128,6 @@ input{
         padding:7px 7px;
         width:26px;
         text-align:center;
-        // border-radius:4px;
         float:left;
         margin-right:3px;
         background-color:rgba(0,0,0,0.2);
@@ -157,28 +155,16 @@ input{
     background: #e1e1e1;
     border: 0px none #ffffff;
     border-radius: 50px;
-
-    &:hover{
-        background: #ffffff;
-    }
-
-    &:active{
-        background: #000000;
-    }
+    &:hover{ background: #ffffff }
+    &:active{ background: #000000 }
 }
 
 ::-webkit-scrollbar-track {
     background: #666666;
     border: 0px none #ffffff;
     border-radius: 50px;
-
-    &:hover{
-        background: #666666;
-    }
-
-    &:active{
-        background: #333333;
-    }
+    &:hover{ background: #666666 }
+    &:active{ background: #333333 }
 }
 
 ::-webkit-scrollbar-corner {

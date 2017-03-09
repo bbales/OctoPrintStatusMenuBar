@@ -29,7 +29,6 @@ const app = new Vue({ data, el: '#app' })
 
 Api.getJob(app).then(() => {
     app.loading = false
-    console.log('got the job!')
 })
 
 function setPercent(a) {
