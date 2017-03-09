@@ -1,7 +1,6 @@
 Vue.component('status', {
-    props: ['job', 'progress', 'status'],
     template: `
-    <div class="status">
+    <div class="status" v-show="$root.view == 'status'">
         <div class="box" style="width:30%">
             <span class="dark">Status:</span> {{status}}<ellipsis v-show="status == 'Printing'"></ellipsis>
         </div>
@@ -25,6 +24,13 @@ Vue.component('status', {
         <pause-resume-stop :state="status"></pause-resume-stop>
     </div>
     `,
+    data() {
+        return {
+            job: this.$root.job,
+            progress: this.$root.progress,
+            status: this.$root.status
+        }
+    },
     methods: {
         openLink() {
             openInBrowser(Api.url)

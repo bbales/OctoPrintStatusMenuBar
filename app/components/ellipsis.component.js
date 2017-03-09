@@ -16,7 +16,7 @@ Vue.component('ellipsis', {
     mounted() {
         this.interval = setInterval(() => {
             this.ellip = '.'.repeat(this.state)
-            this.state = this.state + 1 > 3 ? 0 : this.state + 1
+            this.state = ++this.state > 3 ? 0 : this.state
         }, 300)
     },
 })

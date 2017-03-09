@@ -13,11 +13,11 @@
 				<div v-else>Error</div>
 			</div>
 			<div v-if="!loading && !problem">
-				<status v-if="view == 'status'" :job="job" :status="status" :progress="progress"></status>
-				<setup v-if="view == 'setup'"></setup>
-				<files v-if="view == 'files'" :files="files"></files>
+				<status></status>
+				<setup></setup>
+				<files></files>
 			</div>
-			<tabs :tabs='tabs'></tabs>
+			<tabs></tabs>
 		</div>
 
 		<!-- Classes -->

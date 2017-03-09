@@ -1,10 +1,10 @@
 Vue.filter('filesize', value => {
-    var UNITS = ['B', 'KB', 'MB', 'GB', 'TB']
-    let format = (v, p) => (v / Math.pow(1024, p)).toFixed(2) + UNITS[p]
+    let units = ['B', 'KB', 'MB', 'GB', 'TB']
+    let format = (v, p) => (v / Math.pow(1024, p)).toFixed(2) + units[p]
 
     value = parseFloat(value, 10)
-    for (var i = 0; i < UNITS.length; i++) {
-        if (value < Math.pow(1024, i)) return UNITS[i - 1] ? format(value, i - 1) : value + UNITS[i]
+    for (var i = 0; i < units.length; i++) {
+        if (value < Math.pow(1024, i)) return units[i - 1] ? format(value, i - 1) : value + units[i]
     }
     return format(value, i - 1)
 })

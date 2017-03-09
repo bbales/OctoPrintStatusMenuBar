@@ -50,10 +50,10 @@ Vue.component('progress-canvas', {
             this.ctx.clearRect(this.width + 1, this.height * 3, 45 + 2, -this.height * 3)
 
             this.ctx.fillStyle = 'white'
-            this.ctx.font = "10px Helvetica"
+            this.ctx.font = '10px Helvetica'
             this.ctx.fillText((100 * percent).toFixed(2) + '%', this.width + 7, y + (percent > 0.9 ? 13 : -1))
 
-            this.ctx.fillStyle = "#2B2B2B"
+            this.ctx.fillStyle = '#2B2B2B'
             this.ctx.fillRect(this.width, y + 2, 41, 1)
 
             // Flip and translate
@@ -63,18 +63,21 @@ Vue.component('progress-canvas', {
         setProgress(animate = false) {
             this.clearCanvas()
             this.drawGrid()
-            return new Promise((res, rej) => {
+            return new Promise(res => {
                 // Current cursor position
-                var cur = {
-                    x: 0,
-                    y: 0,
-                    total: () => (cur.y - 1) * this.subs.x - 1 + (cur.y % 2 ? this.subs.x - cur.x : cur.x),
-                    max: Math.floor(this.subs.x * this.subs.y * this.completion),
-                    ratio: () => cur.total() / cur.max
-                }
+                let cur = new class {
+                    constructor(p) {
+                        this.p = p
+                        this.x = 0
+                        this.y = 0
+                        this.max = Math.floor(p.subs.x * p.subs.y * p.completion)
+                    }
+                    get total() { return (this.y - 1) * this.p.subs.x - 1 + (this.y % 2 ? this.p.subs.x - this.x : this.x) }
+                    get ratio() { return this.total / this.max }
+                }(this)
 
                 // Flash length in ms
-                var flashLength = 400
+                let flashLength = 400
 
                 // Recursive flashing function
                 var flashCell = (s = -1) => {
@@ -82,13 +85,13 @@ Vue.component('progress-canvas', {
                     if (s < 0) this.flashing = true
 
                     // Fill cell for flash length
-                    if (s > (flashLength / 1000) * 60) this.fillCell(cur.x, cur.y, 1)
+                    if (s > 60 * flashLength / 1000) this.fillCell(cur.x, cur.y, 1)
 
                     // Clear cell for flash length
                     else this.clearCell(cur.x, cur.y)
 
                     // Increment or reset flash counter
-                    s = s > (flashLength / 1000) * 60 * 2 ? 0 : s + 1
+                    s = s > 60 * 2 * flashLength / 1000 ? 0 : s + 1
 
                     // If flashing isnt disabled, recursively call this function
                     if (this.flashing) window.requestAnimationFrame(() => flashCell(s))
@@ -97,17 +100,17 @@ Vue.component('progress-canvas', {
                 // Recursive cell painting function
                 var fillCells = () => {
                     // Fill the current cell
-                    this.fillCell(cur.x, cur.y, cur.ratio())
+                    this.fillCell(cur.x, cur.y, cur.ratio)
 
                     // Move cursor to new cell
                     if ((cur.y % 2 && cur.x == 0) || (!(cur.y % 2) && cur.x == this.subs.x)) cur.y++;
                     else if (cur.y % 2 && cur.x > 0) cur.x--;
                     else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
 
-                    this.drawText(this.height - 2 - cur.y * this.subSize, this.completion * cur.ratio())
+                    this.drawText(this.height - 2 - cur.y * this.subSize, this.completion * cur.ratio)
 
                     // Recursively call this function
-                    if (cur.total() < cur.max) animate && cur.x % 2 == 0 ? window.requestAnimationFrame(fillCells) : fillCells()
+                    if (cur.total < cur.max) animate && cur.x % 2 == 0 ? window.requestAnimationFrame(fillCells) : fillCells()
 
                     // Flash last cell async and resolve promise
                     else new Promise(() => flashCell()) && res()

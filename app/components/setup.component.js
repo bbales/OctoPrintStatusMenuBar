@@ -1,7 +1,7 @@
 Vue.component('setup', {
     data: () => ({ apiKey: '', url: '' }),
     template: `
-    <div class="setup">
+    <div class="setup" v-if="$root.view == 'setup'">
         <div class="box no-right-border" style="width:100%; margin-bottom:10px;">Setup</div>
 
         <div class="ip">
