@@ -3,6 +3,7 @@ class PrinterFile {
         Object.assign(this, f)
         this.data = data
         this.isFolder = (f.type == 'folder')
+        if (this.isFolder) this.children = this.children.map(c => new PrinterFile(c, data))
     }
 
     get isPrinting() {

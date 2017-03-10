@@ -39,7 +39,7 @@ class Api {
         }
     }
 
-    static getFiles(origin, dir, data) {
+    static getFiles(origin, data) {
 
         if (TEST) {
             // let files = JSON.parse('{"files":[{"name":"slider_sidebar_front.gcode","path":"slider_sidebar_front.gcode","type":"machinecode","typePath":["machinecode","gcode"],"hash":"...","size":1468987,"date":1378847754,"origin":"local","refs":{"resource":"http://example.com/api/files/local/whistle_v2.gcode","download":"http://example.com/downloads/files/local/whistle_v2.gcode"},"gcodeAnalysis":{"estimatedPrintTime":1188,"filament":{"length":810,"volume":5.36}},"print":{"failure":4,"success":23,"last":{"date":1387144346,"success":true}}},{"name":"whistle_.gco","path":"whistle_.gco","type":"machinecode","typePath":["machinecode","gcode"],"origin":"sdcard","refs":{"resource":"http://example.com/api/files/sdcard/whistle_.gco"}},{"name":"folderA","path":"folderA","type":"folder","typePath":["folder"],"children":[],"size":1334}],"free":"3.2GB"}')
