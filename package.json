@@ -12,7 +12,8 @@
   "main": "server.js",
   "scripts": {
     "build": "electron-packager . Example --platform=darwin --arch=x64 --version=0.36.0 --icon=Icon.icns",
-    "start": "electron . "
+    "start": "electron . ",
+    "css" : "sass --watch app/scss/main.scss:app/css/main.css"
   },
   "files": [],
   "keywords": [

@@ -1,7 +1,24 @@
 Vue.component('files', {
     template: `
     <div class="files" v-if="$root.view == 'files'">
-        <div class="box no-right-border" style="width:100%;">Files <span v-show="dir !== ''" @click="upDir()">Go Up dir</span> {{dir}}</div>
+        <div class="box no-right-border" style="width:100%;">
+            Files
+            <i class="fa fa-level-up clickable-icon" v-show="dir !== ''" title="Go Up A Directory" @click="upDir()"></i>
+            <i class="fa fa-home clickable-icon" title="Go To Root" v-show="dir !== ''" @click="rootDir()"></i>
+            <i class="fa fa-refresh clickable-icon" title="Refresh" @click="refresh()"></i>
+             <span class="dark">{{dir}}</span>
+
+            <span class="clickable-icon" style="float:right;">
+                <span :class="origin !== 'local' ? 'dark' : ''" @click="origin = 'local'">
+                    Local
+                    <i class="fa fa-toggle-on green larger-icon" v-show="origin == 'sdcard'" title="Switch Local Files"></i>
+                </span>
+                <span :class="origin == 'local' ? 'dark' : ''" @click="origin = 'sdcard'">
+                    <i class="fa fa-toggle-off green larger-icon" v-show="origin == 'local'" title="Switch to SD Card Files"></i>
+                    SD Card
+                </span>
+            </span>
+        </div>
         <div class="box scroller no-right-border">
             <div class="box no-right-border light-bg" style="width:100%;" v-for="f in files" @click="fileClick(f)">
                 <span style="margin-right:10px;">
@@ -22,13 +39,27 @@ Vue.component('files', {
         }
     },
     mounted() {
-        Api.getFiles(this.origin, this.$root).then(fl => this.rootFiles = fl)
+        this.refresh()
     },
     methods: {
         fileClick(f) {
             if (f.isFolder) this.dir += '/' + f.name
         },
-        upDir() { this.dir = this.dir.split('/').slice(0, -1).join('/') }
+        upDir() {
+            this.dir = this.dir.split('/').slice(0, -1).join('/')
+        },
+        refresh() {
+            Api.getFiles(this.origin, this.$root).then(fl => this.rootFiles = fl)
+        },
+        rootDir() {
+            this.dir = ''
+        }
+    },
+    watch: {
+        origin(n, o) {
+            if (n !== o) this.dir = ''
+            this.refresh()
+        }
     },
     computed: {
         files() {

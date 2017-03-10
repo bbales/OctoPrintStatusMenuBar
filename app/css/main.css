@@ -13,6 +13,17 @@ body {
 .dark {
   color: #999999; }
 
+.green {
+  color: #1bd12d; }
+
+.larger-icon {
+  font-size: 19px;
+  vertical-align: middle; }
+
+.clickable-icon {
+  cursor: pointer;
+  user-select: none; }
+
 #app {
   background-color: #191919;
   color: #E5E5E5;
@@ -61,8 +72,7 @@ body {
     float: left; }
 
 .icon {
-  cursor: pointer !important;
-  background-image: url("icon.png"); }
+  cursor: pointer !important; }
   .icon:hover {
     background-color: rgba(0, 0, 0, 0.2); }
 
