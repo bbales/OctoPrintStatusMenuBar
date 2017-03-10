@@ -31,6 +31,12 @@ Vue.component('status', {
             status: this.$root.status
         }
     },
+    mounted() {
+        this.countDown = setInterval(() => this.progress.printTimeLeft -= 1, 1000)
+    },
+    destroyed() {
+        clearInterval(this.countDown)
+    },
     methods: {
         openLink() {
             openInBrowser(Api.url)
