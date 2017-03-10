@@ -13,6 +13,7 @@ Vue.component('setup', {
         </div>
 
         <button @click="save()">Save</button>
+        <button @click="quit()">Quit</button>
     </div>
     `,
     mounted() {
@@ -26,6 +27,10 @@ Vue.component('setup', {
         retrieve() {
             this.url = Api.url
             this.apiKey = Api.apiKey
+        },
+        quit() {
+            const { ipcRenderer } = require('electron')
+            ipcRenderer.send('quit')
         }
     }
 })

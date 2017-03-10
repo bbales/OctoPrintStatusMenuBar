@@ -5,9 +5,7 @@ $dark-text : #999999;
 $purp-text : #5a1bd1;
 $green-text : #1bd12d;
 
-*{
-  box-sizing: border-box;
-}
+*{box-sizing: border-box}
 
 body{
     background-color: $light-bg;
@@ -16,17 +14,11 @@ body{
     margin: 0 0;
 }
 
-.light-bg{
-    background-color:rgba(0,0,0,0.2);
-}
-
-.dark{
-    color:$dark-text;
-}
-
-.green{
-    color:$green-text;
-}
+.light-bg{background-color:rgba(0,0,0,0.2)}
+.dark{color:$dark-text}
+.green{color:$green-text}
+.left{float:left}
+.right{float:right}
 
 .larger-icon{
     font-size:19px;
@@ -36,6 +28,11 @@ body{
 .clickable-icon{
     cursor:pointer;
     user-select: none;
+}
+
+.no-select{
+    user-select:none;
+    cursor:default;
 }
 
 #app{
@@ -56,22 +53,27 @@ body{
     bottom:0px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-}
 
-.tab{
-    border-top:1px solid #1bd12d;
-    border-right:2px solid $light-bg;
-    line-height:14px;
-    cursor:pointer;
-    height:auto;
-    float:left;
-    padding: 10px 10px;
+    .tab{
+        border-top:1px solid #1bd12d;
+        border-right:2px solid $light-bg;
+        line-height:14px;
+        cursor:pointer;
+        height:auto;
+        float:left;
+        padding: 10px 10px;
 
-    &:active, &.active{
-        border-top:1px solid #5a1bd1;
-        background-color:rgba(0,0,0,0.2);
+        &.left-border{
+            border-left:2px solid $light-bg;
+        }
+
+        &:active, &.active{
+            border-top:1px solid #5a1bd1;
+            background-color:rgba(0,0,0,0.2);
+        }
     }
 }
+
 
 .box{
     $box-border : 1px solid $light-bg;
@@ -137,24 +139,24 @@ input{
     width:98%;
 }
 
-.pause-resume-stop{
-    div{
-        border-top:1px solid #1bd12d;
-        cursor:pointer;
-        padding:7px 7px;
-        width:26px;
-        text-align:center;
-        float:left;
-        margin-right:3px;
-        background-color:rgba(0,0,0,0.2);
-
-        &:active{
-            border-top:1px solid #5a1bd1;
-            background-color:rgba(0,0,0,0.4);
-            color:$dark-text;
-        }
-    }
-}
+// .pause-resume-stop{
+//     div{
+//         border-top:1px solid #1bd12d;
+//         cursor:pointer;
+//         padding:7px 7px;
+//         width:26px;
+//         text-align:center;
+//         float:left;
+//         margin-right:3px;
+//         background-color:rgba(0,0,0,0.2);
+//
+//         &:active{
+//             border-top:1px solid #5a1bd1;
+//             background-color:rgba(0,0,0,0.4);
+//             color:$dark-text;
+//         }
+//     }
+// }
 
 
 ::-webkit-scrollbar {

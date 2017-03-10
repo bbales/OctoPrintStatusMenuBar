@@ -27,6 +27,12 @@ Vue.component('files', {
                     <i v-if="!f.isFolder && !f.isPrinting" class="fa fa-cube"></i>
                 </span>
                 {{f.name}}
+                <span>
+                    <i class="fa fa-trash clickable-icon" title="Refresh" @click="refresh()"></i>
+                    <i v-if="!f.isPrinting" class="fa fa-print clickable-icon" title="Refresh" @click="refresh()"></i>
+                    <i v-if="f.isPrinting" class="fa fa-stop clickable-icon" title="Refresh" @click="refresh()"></i>
+                    <i class="fa fa-trash clickable-icon" title="Refresh" @click="refresh()"></i>
+                </span>
             </div>
         </div>
     </div>

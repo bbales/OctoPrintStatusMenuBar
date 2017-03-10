@@ -1,6 +1,6 @@
 Vue.component('status', {
     template: `
-    <div class="status" v-show="$root.view == 'status'">
+    <div class="status no-select" v-show="$root.view == 'status'">
         <div class="box" style="width:30%">
             <span class="dark">Status:</span> {{status}}<ellipsis v-show="status == 'Printing'"></ellipsis>
         </div>
@@ -21,7 +21,6 @@ Vue.component('status', {
             <progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
             <!-- <progress-canvas :current="job.file.size" :total="job.file.size"></progress-canvas> -->
         </div>
-        <pause-resume-stop :state="status"></pause-resume-stop>
     </div>
     `,
     data() {
@@ -32,7 +31,11 @@ Vue.component('status', {
         }
     },
     mounted() {
-        this.countDown = setInterval(() => this.progress.printTimeLeft -= 1, 1000)
+        let offset = Date.now()
+        let start = this.progress.printTimeLeft
+        this.countDown = setInterval(() => {
+            this.progress.printTimeLeft = start - Math.ceil((Date.now() - offset) / 1000)
+        }, 1200)
     },
     destroyed() {
         clearInterval(this.countDown)

@@ -16,6 +16,12 @@ body {
 .green {
   color: #1bd12d; }
 
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
 .larger-icon {
   font-size: 19px;
   vertical-align: middle; }
@@ -23,6 +29,10 @@ body {
 .clickable-icon {
   cursor: pointer;
   user-select: none; }
+
+.no-select {
+  user-select: none;
+  cursor: default; }
 
 #app {
   background-color: #191919;
@@ -41,18 +51,19 @@ body {
   bottom: 0px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px; }
-
-.tab {
-  border-top: 1px solid #1bd12d;
-  border-right: 2px solid #2B2B2B;
-  line-height: 14px;
-  cursor: pointer;
-  height: auto;
-  float: left;
-  padding: 10px 10px; }
-  .tab:active, .tab.active {
-    border-top: 1px solid #5a1bd1;
-    background-color: rgba(0, 0, 0, 0.2); }
+  .tabs .tab {
+    border-top: 1px solid #1bd12d;
+    border-right: 2px solid #2B2B2B;
+    line-height: 14px;
+    cursor: pointer;
+    height: auto;
+    float: left;
+    padding: 10px 10px; }
+    .tabs .tab.left-border {
+      border-left: 2px solid #2B2B2B; }
+    .tabs .tab:active, .tabs .tab.active {
+      border-top: 1px solid #5a1bd1;
+      background-color: rgba(0, 0, 0, 0.2); }
 
 .box {
   border-bottom: 1px solid #2B2B2B;
@@ -99,20 +110,6 @@ input {
   height: 178px;
   overflow: auto;
   width: 98%; }
-
-.pause-resume-stop div {
-  border-top: 1px solid #1bd12d;
-  cursor: pointer;
-  padding: 7px 7px;
-  width: 26px;
-  text-align: center;
-  float: left;
-  margin-right: 3px;
-  background-color: rgba(0, 0, 0, 0.2); }
-  .pause-resume-stop div:active {
-    border-top: 1px solid #5a1bd1;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: #999999; }
 
 ::-webkit-scrollbar {
   width: 3px;
