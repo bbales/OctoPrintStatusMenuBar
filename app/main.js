@@ -3,7 +3,6 @@ var TEST = true
 // Master list instance
 const data = {
     job: {},
-    files: [],
     progress: {},
     status: '',
     view: 'status',
@@ -29,6 +28,7 @@ const app = new Vue({ data, el: '#app' })
 
 Api.getJob(app).then(() => {
     app.loading = false
+    Vue.log(app.job)
 })
 
 function setPercent(a) {
