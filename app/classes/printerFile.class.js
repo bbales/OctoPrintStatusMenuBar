@@ -7,6 +7,6 @@ class PrinterFile {
     }
 
     get isPrinting() {
-        return this.data.status == 'Printing' && this.data.job.file.path == this.path
+        return this.data.state.flags.printing && this.data.job.file.path == this.path
     }
 }

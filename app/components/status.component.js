@@ -2,7 +2,7 @@ Vue.component('status', {
     template: `
     <div class="status no-select" v-show="$root.view == 'status'">
         <div class="box" style="width:30%">
-            <span class="dark">Status:</span> {{status}}<ellipsis v-show="status == 'Printing'"></ellipsis>
+            <span class="dark">Status:</span> {{state.text}}<ellipsis v-show="state.flags.printing"></ellipsis>
         </div>
         <div class="box" style="width:62%">
             <span class="dark">File Name:</span> {{job.file.name}}<br>
@@ -27,7 +27,7 @@ Vue.component('status', {
         return {
             job: this.$root.job,
             progress: this.$root.progress,
-            status: this.$root.status
+            state: this.$root.state
         }
     },
     mounted() {

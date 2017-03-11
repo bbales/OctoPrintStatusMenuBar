@@ -5,7 +5,7 @@ Vue.component('tabs', {
             <i :class="'fa '+tab.icon"></i>
             {{tab.label}}
         </div>
-        <pause-resume-stop :state="$root.status"></pause-resume-stop>
+        <pause-resume-stop></pause-resume-stop>
     </div>
     `,
 })

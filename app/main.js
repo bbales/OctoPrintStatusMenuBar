@@ -4,7 +4,7 @@ var TEST = true
 const data = {
     job: {},
     progress: {},
-    status: '',
+    state: {},
     view: 'status',
     loading: true,
     problem: false,
@@ -26,9 +26,10 @@ const data = {
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
+Api.getState(app)
+
 Api.getJob(app).then(() => {
     app.loading = false
-    Vue.log(app.job)
 })
 
 function setPercent(a) {

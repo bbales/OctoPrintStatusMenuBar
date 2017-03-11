@@ -33,7 +33,6 @@ class Api {
 
         function processJob(j) {
             data.job = j.job
-            data.status = j.state
             data.progress = j.progress
             return data
         }
@@ -53,6 +52,19 @@ class Api {
 
         function processFiles(j) {
             return j.files.map(f => new PrinterFile(f, data))
+        }
+    }
+
+    static getState(data) {
+        if (TEST) {
+            let state = JSON.parse('{"state":{"text":"Printing","flags":{"operational":true,"paused":false,"printing":true,"sdReady":true,"error":false,"ready":false,"closedOrError":false}}}')
+            return new Promise(res => res(state)).then(processState)
+        }
+
+        function processState(j) {
+            data.state = j.state
+            console.log(j.state.text)
+            return j.state
         }
     }
 

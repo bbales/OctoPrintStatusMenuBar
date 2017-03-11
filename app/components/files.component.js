@@ -1,9 +1,8 @@
 Vue.component('files', {
     template: `
-    <div class="files" v-if="$root.view == 'files'">
+    <div class="files no-select" v-if="$root.view == 'files'">
         <div class="box no-right-border" style="width:100%;">
             Files
-            <i class="fa fa-level-up clickable-icon" v-show="dir !== ''" title="Go Up A Directory" @click="upDir()"></i>
             <i class="fa fa-home clickable-icon" title="Go To Root" v-show="dir !== ''" @click="rootDir()"></i>
             <i class="fa fa-refresh clickable-icon" title="Refresh" @click="refresh()"></i>
              <span class="dark">{{dir}}</span>
@@ -20,6 +19,10 @@ Vue.component('files', {
             </span>
         </div>
         <div class="box scroller no-right-border">
+            <div class="box no-right-border light-bg clickable-icon" style="width:100%;" v-if="dir !== ''" @click="upDir()">
+                <i title="Move Up a Directory" class="fa fa-level-up" style="margin-left:5px;margin-right:10px;"></i>
+                ../
+            </div>
             <div class="box no-right-border light-bg" style="width:100%;" v-for="f in files" @click="fileClick(f)">
                 <span style="margin-right:10px;">
                     <i v-if="f.isPrinting" title="Print in progress" class="fa fa-circle-o-notch fa-spin"></i>
@@ -27,11 +30,9 @@ Vue.component('files', {
                     <i v-if="!f.isFolder && !f.isPrinting" class="fa fa-cube"></i>
                 </span>
                 {{f.name}}
-                <span>
-                    <i class="fa fa-trash clickable-icon" title="Refresh" @click="refresh()"></i>
-                    <i v-if="!f.isPrinting" class="fa fa-print clickable-icon" title="Refresh" @click="refresh()"></i>
-                    <i v-if="f.isPrinting" class="fa fa-stop clickable-icon" title="Refresh" @click="refresh()"></i>
-                    <i class="fa fa-trash clickable-icon" title="Refresh" @click="refresh()"></i>
+                <span class="right">
+                    <i class="fa fa-trash clickable-icon" title="Delete file" @click="refresh()"></i>
+                    <i v-if="!f.isPrinting" class="fa fa-print clickable-icon" title="Print This File" @click="refresh()"></i>
                 </span>
             </div>
         </div>
