@@ -13,7 +13,7 @@
   "scripts": {
     "build": "electron-packager . Example --platform=darwin --arch=x64 --version=0.36.0 --icon=Icon.icns",
     "start": "electron . ",
-    "css" : "sass --watch app/scss/main.scss:app/css/main.css"
+    "css": "sass --watch app/scss/main.scss:app/css/main.css"
   },
   "files": [],
   "keywords": [
@@ -24,6 +24,7 @@
     "font-awesome": "^4.7.0",
     "menubar": "^5.2.0",
     "moment": "^2.17.1",
+    "node-notifier": "^5.0.2",
     "vue": "^2.1.10"
   },
   "devDependencies": {

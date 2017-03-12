@@ -27,7 +27,10 @@ const data = {
 const app = new Vue({ data, el: '#app' })
 
 
-Api.getJob(app).then(() => Api.getState(app).then(() => app.loading = false))
+Api.getJob(app).then(() => Api.getState(app).then(() => {
+    app.loading = false
+    Notification.printComplete()
+}))
 
 function setPercent(a) {
     data.progress.filepos = a * data.job.file.size
