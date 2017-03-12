@@ -5,7 +5,8 @@ Vue.component('status', {
             <span class="dark">Status:</span> {{state.text}}<ellipsis v-show="state.flags.printing"></ellipsis>
         </div>
         <div class="box" style="width:62%">
-            <span class="dark">File Name:</span> {{job.file.name}}<br>
+            <span class="dark">File Name:</span>
+            <text-scroller :text="job.file.name" :max="30"></text-scroller><br>
         </div>
         <div class="box no-right-border icon" style="width:8%" @click="openLink()">
             <img src="icon.png" style="cursor:pointer;" width="14" alt="">
@@ -42,7 +43,8 @@ Vue.component('status', {
     },
     methods: {
         openLink() {
-            openInBrowser(Api.url)
+            const { ipcRenderer } = require('electron')
+            ipcRenderer.send('open-in-browser', Api.url)
         }
     }
 })
