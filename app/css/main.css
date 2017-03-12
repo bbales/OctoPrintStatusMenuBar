@@ -152,7 +152,7 @@ body {
   line-height: 25px;
   vertical-align: middle; }
 
-input {
+input[type='text'], input[type='password'] {
   margin-bottom: 5px;
   width: 220px;
   padding: 5px 5px;
