@@ -34,3 +34,5 @@ function shadeBlend(p, c0, c1) {
 }
 
 Vue.log = (...o) => console.log(...(o.map(i => i === undefined ? undefined : JSON.parse(JSON.stringify(i)))))
+
+window.wait = ms => new Promise(rs => setTimeout(() => rs(), ms))

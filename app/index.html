@@ -9,15 +9,24 @@
 	</head>
 	<body>
 		<div id="app">
-			<div v-if="loading">
-				<div v-if="!problem">Loading</div>
-				<div v-else>Error</div>
+			<div v-if="loading && view !== 'setup'" class="center dark" style="padding-top:20%">
+				<div v-if="!problem">
+					<i class="fa fa-circle-o-notch fa-2x fa-spin"></i>
+					<br><br>
+					Loading
+				</div>
+				<div v-else>
+					<i class="fa fa-frown-o fa-2x"></i>
+					<br><br>
+					Something Went Wrong.<br>
+					Check The Setup Tab.
+				</div>
 			</div>
 			<div v-if="!loading && !problem">
 				<status></status>
-				<setup></setup>
 				<files></files>
 			</div>
+			<setup></setup>
 			<tabs></tabs>
 		</div>
 

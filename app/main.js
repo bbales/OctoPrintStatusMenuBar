@@ -26,10 +26,9 @@ const data = {
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
-Api.getState(app)
 
 Api.getJob(app).then(() => {
-    app.loading = false
+    Api.getState(app).then(() => app.loading = false)
 })
 
 function setPercent(a) {

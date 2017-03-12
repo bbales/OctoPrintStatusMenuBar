@@ -58,12 +58,11 @@ class Api {
     static getState(data) {
         if (TEST) {
             let state = JSON.parse('{"state":{"text":"Printing","flags":{"operational":true,"paused":false,"printing":true,"sdReady":true,"error":false,"ready":false,"closedOrError":false}}}')
-            return new Promise(res => res(state)).then(processState)
+            return window.wait(3000 * Math.random()).then(v => new Promise(res => res(state)).then(processState))
         }
 
         function processState(j) {
             data.state = j.state
-            console.log(j.state.text)
             return j.state
         }
     }
