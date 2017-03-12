@@ -38,13 +38,11 @@ Vue.component('files', {
         </div>
     </div>
     `,
-    data() {
-        return {
-            dir: '',
-            origin: 'local',
-            rootFiles: [],
-        }
-    },
+    data: () => ({
+        dir: '',
+        origin: 'local',
+        rootFiles: []
+    }),
     mounted() {
         this.refresh()
     },

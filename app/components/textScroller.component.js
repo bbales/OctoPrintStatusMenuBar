@@ -1,27 +1,15 @@
 Vue.component('text-scroller', {
     name: 'text-scroller',
-    template: `
-    <span :title="text">{{fragment}}</span>
-    `,
+    template: `<span :title="text">{{fragment}}</span>`,
     props: { text: String, max: Number },
-    data() {
-        return {
-            pos: 0,
-            interval: false,
-            numSpaces: 5,
-        }
-    },
-    destroyed() {
-        clearInterval(this.interval)
-    },
     mounted() { this.start() },
+    destroyed() { clearInterval(this.interval) },
+    data: () => ({ pos: 0, interval: false, spaces: 5 }),
     methods: {
         start() {
             if (this.text.length < this.max) return
             clearInterval(this.interval)
-            this.interval = setInterval(() => {
-                this.pos = (this.pos > this.text.length + this.numSpaces - 2) ? 0 : this.pos + 1
-            }, 150)
+            this.interval = setInterval(() => this.pos = (this.pos > this.text.length + this.spaces - 2) ? 0 : this.pos + 1, 150)
         }
     },
     watch: {
@@ -29,7 +17,7 @@ Vue.component('text-scroller', {
     },
     computed: {
         fragment() {
-            return (this.text + (' '.repeat(this.numSpaces)) + this.text).slice(this.pos, this.pos + this.max).replace(/ /g, '\u00a0')
+            return (this.text + ' '.repeat(this.spaces) + this.text).slice(this.pos, this.pos + this.max).replace(/ /g, '\u00a0')
         }
     }
 })

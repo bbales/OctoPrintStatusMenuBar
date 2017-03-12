@@ -1,18 +1,8 @@
 Vue.component('ellipsis', {
     name: 'ellipsis',
-    template: `
-    <span>{{ellip}}</span>
-    `,
-    data() {
-        return {
-            state: 0,
-            ellip: '',
-            interval: false
-        }
-    },
-    destroyed() {
-        clearInterval(this.interval)
-    },
+    template: `<span>{{ellip}}</span>`,
+    destroyed() { clearInterval(this.interval) },
+    data: () => ({ state: 0, ellip: '', interval: false }),
     mounted() {
         this.interval = setInterval(() => {
             this.ellip = '.'.repeat(this.state)

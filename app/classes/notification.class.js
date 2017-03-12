@@ -1,5 +1,3 @@
-const { ipcRenderer } = require('electron')
-
 class Notification {
     static printComplete() {
         let data = {

@@ -1,5 +1,7 @@
 var TEST = true
 
+try { const { ipcRenderer } = require('electron') } catch (e) { console.warn('Running outside of Electron environment') }
+
 // Master list instance
 const data = {
     job: {},
@@ -20,18 +22,13 @@ const data = {
         name: 'setup',
         label: '',
         icon: 'fa-cog'
-    }, ]
+    }]
 }
 
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
-
 Api.getJob(app).then(() => Api.getState(app).then(() => {
     app.loading = false
     Notification.printComplete()
 }))
-
-function setPercent(a) {
-    data.progress.filepos = a * data.job.file.size
-}

@@ -43,7 +43,6 @@ Vue.component('status', {
     },
     methods: {
         openLink() {
-            const { ipcRenderer } = require('electron')
             ipcRenderer.send('open-in-browser', Api.url)
         }
     }
