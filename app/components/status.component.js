@@ -1,10 +1,12 @@
 Vue.component('status', {
     template: `
     <div class="status no-select" v-show="$root.view == 'status'">
-        <div class="box" style="width:31%; overflow:hidden">
-            <span class="dark">Status:</span> {{state.text}}<ellipsis v-show="state.flags.printing"></ellipsis>
+        <div class="box" style="width:31%; overflow:hidden;white-space:nowrap">
+            <span class="dark">Status:</span>
+            <text-scroller :text="state.text ? state.text : 'No Connection'" :max="12"></text-scroller>
+            <ellipsis v-show="state.flags && state.flags.printing"></ellipsis>
         </div>
-        <div class="box" style="width:61%; overflow:hidden">
+        <div class="box" style="width:61%; overflow:hidden;white-space:nowrap">
             <span class="dark">File Name:</span>
             <text-scroller :text="job.file.name ? job.file.name : 'No job in active'" :max="30"></text-scroller><br>
         </div>

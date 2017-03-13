@@ -12,11 +12,15 @@ class Api {
         return headers
     }
 
-    static getJob(data) {
+    static getJob(data = app) {
         var jobRequest = new Request(this.url + 'api/job', { headers: this.headers, mode: 'cors' })
         return fetch(jobRequest)
             .then(r => r.json())
             .then(processJob)
+            .catch(e => {
+                data.loading = true
+                data.problem = true
+            })
 
         function processJob(j) {
             data.job = j.job
@@ -25,22 +29,30 @@ class Api {
         }
     }
 
-    static getFiles(origin, data) {
+    static getFiles(origin, data = app) {
         var filesRequest = new Request(this.url + 'api/files/' + origin + '?recursive=true', { headers: this.headers, mode: 'cors' })
         return fetch(filesRequest)
             .then(r => r.json())
             .then(processFiles)
+            .catch(e => {
+                data.loading = true
+                data.problem = true
+            })
 
         function processFiles(j) {
             return j.files.map(f => new PrinterFile(f, data))
         }
     }
 
-    static getState(data) {
+    static getState(data = app) {
         var stateRequest = new Request(this.url + 'api/printer?exclude=temperature', { headers: this.headers, mode: 'cors' })
         return fetch(stateRequest)
             .then(r => r.json())
             .then(processState)
+            .catch(e => {
+                data.loading = true
+                data.problem = true
+            })
 
         function processState(j) {
             data.state = j.state
@@ -57,6 +69,14 @@ class Api {
         function processCommandResponse(j) {
 
         }
+    }
+
+    static toggleJob() {
+
+    }
+
+    static stopJob() {
+
     }
 
     static printFile(file) {

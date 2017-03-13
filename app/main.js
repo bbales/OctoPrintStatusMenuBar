@@ -4,6 +4,7 @@ try { const { ipcRenderer } = require('electron') } catch (e) { console.warn('Ru
 
 // Master list instance
 const data = {
+    Api: Api,
     job: {},
     progress: {},
     state: {},
@@ -28,14 +29,9 @@ const data = {
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
-Api.getJob(app)
-    .then(() => Api.getState(app))
+Api.getJob()
+    .then(() => Api.getState())
     .then(() => {
         app.loading = false
-        // Notification.printComplete()
-        setInterval(() => {
-            Api.getJob(app)
-                .then(() => Api.getState(app))
-                .then(() => console.log('Update'))
-        }, 10000)
+        setInterval(() => Api.getJob().then(() => Api.getState()), 10000)
     })

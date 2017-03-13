@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<div v-if="loading && view !== 'setup'" class="center dark" style="padding-top:20%">
+			<div v-if="(loading || problem) && view !== 'setup'" class="center dark" style="padding-top:20%">
 				<div v-if="!problem">
 					<i class="fa fa-circle-o-notch fa-2x fa-spin"></i>
 					<br><br>
@@ -52,6 +52,6 @@
 		<script src="globals.js"></script>
 		<script src="filters.js"></script>
 		<script src="main.js"></script>
-		
+
 	</body>
 </html>
