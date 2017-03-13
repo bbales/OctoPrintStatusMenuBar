@@ -3,22 +3,23 @@ Vue.component('status', {
     <div class="status no-select" v-show="$root.view == 'status'">
         <div class="box" style="width:31%; overflow:hidden;white-space:nowrap">
             <span class="dark">Status:</span>
-            <text-scroller :text="state.text ? state.text : 'No Connection'" :max="12"></text-scroller>
-            <ellipsis v-show="state.flags && state.flags.printing"></ellipsis>
+            <text-scroller :text="$root.state.text ? $root.state.text : 'No Connection'" :max="12"></text-scroller>
+            <ellipsis v-show="$root.state.flags && $root.state.flags.printing"></ellipsis>
         </div>
         <div class="box" style="width:61%; overflow:hidden;white-space:nowrap">
             <span class="dark">File Name:</span>
-            <text-scroller :text="job.file.name ? job.file.name : 'No job in active'" :max="30"></text-scroller><br>
+            <text-scroller :text="$root.job.file.name ? $root.job.file.name : 'No job in progress.'" :max="30"></text-scroller><br>
         </div>
         <div class="box no-right-border icon" style="width:8%" @click="openLink()">
             <img src="icon.png" style="cursor:pointer;" width="14" alt="">
         </div>
         <div class="box" style="width:65%;height:123px;">
-            <div v-if="progress.completion">
-                <span class="dark">Size:</span> {{job.file.size | filesize}}<br>
-                <span class="dark">Date Uploaded:</span> {{job.file.date | moment1}}<br><br>
-                <span class="dark">Time Remaining:</span> {{progress.printTimeLeft*1000 | duration-human}}<br>
-                <span class="dark">Estimated Print Time:</span> {{progress.printTime*1000 | duration-human}}<br>
+            <div v-if="$root.progress.completion !== null">
+                <span class="dark">Size:</span> {{$root.job.file.size | filesize}}<br>
+                <span class="dark">Date Uploaded:</span> {{$root.job.file.date | moment1}}<br><br>
+                <span class="dark">Time Remaining:</span> {{$root.progress.printTimeLeft*1000 | duration-human}}<br>
+                <span class="dark">Current Print Time:</span> {{$root.progress.printTime*1000 | duration-human}}<br>
+                <span class="dark">Estimated Print Time:</span> {{$root.job.estimatedPrintTime*1000 | duration-human}}<br>
                 <span class="dark">Job Completion:</span> {{jobCompletion}}
             </div>
             <div v-else>
@@ -26,23 +27,16 @@ Vue.component('status', {
             </div>
         </div>
         <div class="box no-right-border" style="width:35%">
-            <progress-canvas :current="progress.filepos" :total="job.file.size"></progress-canvas>
+            <progress-canvas :current="$root.progress.filepos" :total="$root.job.file.size"></progress-canvas>
         </div>
     </div>
     `,
-    data() {
-        return {
-            job: this.$root.job,
-            progress: this.$root.progress,
-            state: this.$root.state
-        }
-    },
     mounted() {
-        Vue.log(this.progress)
         let offset = Date.now()
-        let start = this.progress.printTimeLeft
+        let start = this.$root.progress.printTimeLeft
         this.countDown = setInterval(() => {
-            this.progress.printTimeLeft = start - Math.ceil((Date.now() - offset) / 1000)
+            if (this.$root.state.text == 'Printing')
+                this.$root.progress.printTimeLeft = start - Math.ceil((Date.now() - offset) / 1000)
         }, 1200)
     },
     destroyed() {
@@ -54,17 +48,16 @@ Vue.component('status', {
         }
     },
     watch: {
-        progress() {
-            console.log(this.progress)
+        'progress.printTime' () {
             clearInterval(this.countDown)
             this.mounted()
         }
     },
     computed: {
         jobCompletion() {
-            return (this.progress.filepos / 1024).toFixed(0) + '/' +
-                (this.job.file.size / 1024).toFixed(0) +
-                'KB(' + this.progress.completion.toFixed(2) + '%)'
+            return (this.$root.progress.filepos / 1024).toFixed(0) + '/' +
+                (this.$root.job.file.size / 1024).toFixed(0) +
+                'KB (' + this.$root.progress.completion.toFixed(2) + '%)'
         }
     }
 })

@@ -3,7 +3,7 @@ Vue.component('pause-resume-stop', {
     <div class="pause-resume-stop no-select right">
         <div class="tab left-border" v-show="showPlay" title="Pause Job" @click="$root.Api.toggleJob"><i class="fa fa-play"></i></div>
         <div class="tab left-border" v-show="showPause" title="Resume Job" @click="$root.Api.toggleJob"><i class="fa fa-pause"></i></div>
-        <div class="tab" title="Stop Job" v-show="showStop" @click="$root.Api.stopJob"><i class="fa fa-stop"></i></div>
+        <div class="tab" title="Cancel Job" v-show="showStop" @click="$root.Api.stopJob"><i class="fa fa-stop"></i></div>
     </div>
     `,
     computed: {

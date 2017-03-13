@@ -2,6 +2,7 @@ Vue.component('progress-canvas', {
     template: `
     <div class="progress-canvas">
         <canvas ref="can" :width="width+45+2" :height="height+2"></canvas>
+        {{completion}} {{current}} {{total}}
     </div>
     `,
     props: ['current', 'total'],
@@ -72,6 +73,7 @@ Vue.component('progress-canvas', {
                         this.x = 0
                         this.y = 0
                         this.max = Math.floor(p.subs.x * p.subs.y * p.completion)
+                        console.log(this.max)
                     }
                     get total() { return (this.y - 1) * this.p.subs.x - 1 + (this.y % 2 ? this.p.subs.x - this.x : this.x) }
                     get ratio() { return this.total / this.max }

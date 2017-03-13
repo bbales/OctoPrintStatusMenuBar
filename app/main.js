@@ -1,6 +1,7 @@
 var TEST = false
 
-try { const { ipcRenderer } = require('electron') } catch (e) { console.warn('Running outside of Electron environment') }
+var ipcRenderer
+try { ipcRenderer = require('electron').ipcRenderer } catch (e) { console.warn('Running outside of Electron environment') }
 
 // Master list instance
 const data = {
@@ -33,5 +34,6 @@ Api.getJob()
     .then(() => Api.getState())
     .then(() => {
         app.loading = false
-        setInterval(() => Api.getJob().then(() => Api.getState()), 10000)
+        // setTimeout(() => Notification.printComplete(), 5000)
+        setInterval(() => Api.getJob().then(() => Api.getState()).then(() => console.log('updated')), 10000)
     })
