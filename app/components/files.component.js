@@ -3,9 +3,12 @@ Vue.component('files', {
     <div class="files no-select" v-if="$root.view == 'files'">
         <div class="box no-right-border" style="width:100%;">
             Files
-            <i class="fa fa-home clickable-icon" title="Go To Root" v-show="dir !== ''" @click="rootDir()"></i>
+            &nbsp;
             <i class="fa fa-refresh clickable-icon" title="Refresh" @click="refresh()"></i>
-             <span class="dark">{{dir}}</span>
+            &nbsp;
+            <i class="fa fa-home clickable-icon" title="Go To Root" v-show="dir !== ''" @click="rootDir()"></i>
+            &nbsp;
+            <span class="dark">{{dir}}</span>
 
             <span class="clickable-icon" style="float:right;">
                 <span :class="origin !== 'local' ? 'dark' : ''" @click="origin = 'local'">

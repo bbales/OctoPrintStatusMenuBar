@@ -1,4 +1,4 @@
-var TEST = true
+var TEST = false
 
 try { const { ipcRenderer } = require('electron') } catch (e) { console.warn('Running outside of Electron environment') }
 
@@ -28,7 +28,14 @@ const data = {
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
-Api.getJob(app).then(() => Api.getState(app).then(() => {
-    app.loading = false
-    Notification.printComplete()
-}))
+Api.getJob(app)
+    .then(() => Api.getState(app))
+    .then(() => {
+        app.loading = false
+        // Notification.printComplete()
+        setInterval(() => {
+            Api.getJob(app)
+                .then(() => Api.getState(app))
+                .then(() => console.log('Update'))
+        }, 10000)
+    })
