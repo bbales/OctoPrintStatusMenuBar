@@ -40,6 +40,10 @@ body{
 .clickable-icon{
     cursor:pointer;
     user-select: none;
+
+    &:hover{
+        color:$dark-text
+    }
 }
 
 .no-select{

@@ -30,7 +30,7 @@ Vue.component('progress-canvas', {
             if (this.completion >= 1) Notification.printComplete()
 
             // Go to the current progress
-            window.requestAnimationFrame(() => this.setProgress())
+            else window.requestAnimationFrame(() => this.setProgress())
         }
     },
     methods: {

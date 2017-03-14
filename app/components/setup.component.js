@@ -25,9 +25,15 @@ Vue.component('setup', {
     },
     methods: {
         save() {
+            // Save API key
             Api.apiKey = this.apiKey
+
+            // Add a forward slash to the url if one is not present
+            if (this.url[this.url.length - 1] !== '/') this.url += '/'
             Api.url = this.url
-            Notification.notificationsEnabled = this.notificationsEnabled
+
+            // Save notifications setting
+            Notification.notificationsEnabled = !!this.notificationsEnabled
         },
         retrieve() {
             this.url = Api.url

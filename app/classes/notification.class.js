@@ -17,6 +17,7 @@ class Notification {
     }
 
     static custom(arg) {
-
+        if (!Notification.notificationsEnabled) return
+        ipcRenderer.send('notification', arg)
     }
 }

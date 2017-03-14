@@ -85,6 +85,8 @@ body {
 .clickable-icon {
   cursor: pointer;
   user-select: none; }
+  .clickable-icon:hover {
+    color: #999999; }
 
 .no-select {
   user-select: none;
