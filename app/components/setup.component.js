@@ -41,7 +41,6 @@ Vue.component('setup', {
             this.notificationsEnabled = Notification.notificationsEnabled
         },
         quit() {
-            const { ipcRenderer } = require('electron')
             ipcRenderer.send('quit')
         }
     }

@@ -9,7 +9,7 @@ class Api {
         var headers = new Headers()
         headers.append('X-Api-Key', this.apiKey)
         headers.append('Content-Type', 'application/json')
-        return headers
+        return { headers, mode: 'cors' }
     }
 
     static problem() {
@@ -18,25 +18,23 @@ class Api {
     }
 
     static getJob() {
-        let jobRequest = new Request(this.url + 'api/job', { headers: this.headers, mode: 'cors' })
+        let jobRequest = new Request(`${this.url}api/job`, this.headers)
         return fetch(jobRequest)
             .then(r => r.json())
             .then(processJob)
             .catch(Api.problem)
 
         function processJob(j) {
-            Vue.set(app, 'job', j.job)
-            Vue.set(app, 'progress', j.progress)
-            return app
+            app.job = j.job
+            app.progress = j.progress
         }
     }
 
     static getFiles(origin) {
-        let filesRequest = new Request(this.url + 'api/files/' + origin + '?recursive=true', { headers: this.headers, mode: 'cors' })
+        let filesRequest = new Request(`${this.url}api/files/${origin}?recursive=true`, this.headers)
         return fetch(filesRequest)
             .then(r => r.json())
             .then(processFiles)
-            .catch(Api.problem)
             .catch(Api.problem)
 
         function processFiles(j) {
@@ -45,33 +43,26 @@ class Api {
     }
 
     static getState() {
-        let stateRequest = new Request(this.url + 'api/printer?exclude=temperature', { headers: this.headers, mode: 'cors' })
+        let stateRequest = new Request(`${this.url}api/printer?exclude=temperature`, this.headers)
         return fetch(stateRequest)
             .then(r => r.json())
             .then(processState)
             .catch(Api.problem)
 
         function processState(j) {
-            Vue.set(app, 'state', j.state)
-            return app.state
+            // Vue.set(app, 'state', j.state)
+            app.state = j.state
         }
     }
 
     static sendJobCommand(command) {
-        let commandRequest = new Request(this.url + 'api/job', { method: 'POST', headers: this.headers, mode: 'cors', body: JSON.stringify(command) })
+        let commandRequest = new Request(`${this.url}api/job`, Object.assign({}, this.headers, { method: 'POST', body: JSON.stringify(command) }))
         return fetch(commandRequest)
-            .then(processCommandResponse)
             .then(() => window.wait(200).then(() => Api.getJob().then(() => Api.getState())))
-            .catch(e => console.log(e))
-
-        function processCommandResponse(j) {
-
-        }
     }
 
     static toggleJob() {
-        if (app.state.flags.printing) return Api.sendJobCommand({ command: 'pause', action: 'pause' })
-        else return Api.sendJobCommand({ command: 'pause', action: 'resume' })
+        return Api.sendJobCommand({ command: 'pause', action: (app.state.flags.printing ? 'pause' : 'resume') })
     }
 
     static stopJob() {
@@ -79,32 +70,17 @@ class Api {
     }
 
     static printFile(file) {
-        let command = {
-            command: 'select',
-            print: true
-        }
+        let body = JSON.stringify({ command: 'select', print: true })
 
-        let printFileRequest = new Request(this.url + `api/files/${file.origin}/${file.path}`, { method: 'POST', headers: this.headers, mode: 'cors', body: JSON.stringify(command) })
+        let printFileRequest = new Request(`${this.url}api/files/${file.origin}/${file.path}`, Object.assign({}, this.headers, { method: 'POST', body }))
 
         return fetch(printFileRequest)
-            .then(processPrintFileResponse)
             .then(() => window.wait(200).then(() => Api.getJob().then(() => Api.getState())))
-            .catch(e => console.log(e))
-
-        function processPrintFileResponse(j) {
-
-        }
     }
 
     static deleteFile(file) {
-        let deleteFileRequest = new Request(this.url + `api/files/${file.origin}/${file.path}`, { method: 'DELETE', headers: this.headers, mode: 'cors' })
+        let deleteFileRequest = new Request(`${this.url}api/files/${file.origin}/${file.path}`, Object.assign({}, this.headers, { method: 'DELETE' }))
 
         return fetch(deleteFileRequest)
-            .then(processDeleteFileResponse)
-            .catch(e => console.log(e))
-
-        function processDeleteFileResponse(j) {
-
-        }
     }
 }

@@ -40,10 +40,7 @@ body{
 .clickable-icon{
     cursor:pointer;
     user-select: none;
-
-    &:hover{
-        color:$dark-text
-    }
+    &:hover{ color:$dark-text }
 }
 
 .no-select{
@@ -96,20 +93,11 @@ body{
     border-right:$box-border;
     padding:10px 10px;
     float:left;
-
-    &.w30{width:30%}
-    &.w40{width:40%}
-    &.w60{width:60%}
     &.no-right-border{border-right: 0px}
-
-    &.w70{
-        width:70%;
-        float:left;
-    }
 }
 
 .icon{
-    cursor:pointer !important;
+    cursor:pointer;
     &:hover{background-color:rgba(0,0,0,0.2)}
 }
 
@@ -136,6 +124,6 @@ input[type='text'], input[type='password']{
 
 .scroller{
     height:250px - 35px - 37px;
-    overflow:auto;
+    overflow:scroll-y;
     width:98%;
 }

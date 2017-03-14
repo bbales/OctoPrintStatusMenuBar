@@ -1,7 +1,4 @@
-var TEST = false
-
-var ipcRenderer
-try { ipcRenderer = require('electron').ipcRenderer } catch (e) { console.warn('Running outside of Electron environment') }
+try { var ipcRenderer = require('electron').ipcRenderer } catch (e) { console.warn('Running outside of Electron environment') }
 
 // Master list instance
 const data = {
@@ -30,6 +27,7 @@ const data = {
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
+// Start polling
 Api.getJob()
     .then(() => Api.getState())
     .then(() => {

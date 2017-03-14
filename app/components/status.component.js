@@ -8,7 +8,7 @@ Vue.component('status', {
         </div>
         <div class="box" style="width:61%; overflow:hidden;white-space:nowrap">
             <span class="dark">File Name:</span>
-            <text-scroller :text="$root.job.file.name ? $root.job.file.name : 'No job in progress.'" :max="30"></text-scroller><br>
+            <text-scroller :text="$root.job.file && $root.job.file.name ? $root.job.file.name : 'No job in progress.'" :max="30"></text-scroller><br>
         </div>
         <div class="box no-right-border icon" style="width:8%" @click="openLink()">
             <img src="icon.png" style="cursor:pointer;" width="14" alt="">
@@ -26,7 +26,7 @@ Vue.component('status', {
                 No job in progress.
             </div>
         </div>
-        <div class="box no-right-border" style="width:35%">
+        <div class="box no-right-border" style="width:35%" v-show="$root.job.file">
             <progress-canvas :current="$root.progress.filepos" :total="$root.job.file.size"></progress-canvas>
         </div>
     </div>

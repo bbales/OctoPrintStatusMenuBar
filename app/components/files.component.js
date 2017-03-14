@@ -50,21 +50,11 @@ Vue.component('files', {
         this.refresh()
     },
     methods: {
-        fileClick(f) {
-            if (f.isFolder) this.dir += '/' + f.name
-        },
-        upDir() {
-            this.dir = this.dir.split('/').slice(0, -1).join('/')
-        },
-        refresh() {
-            Api.getFiles(this.origin, this.$root).then(fl => this.rootFiles = fl)
-        },
-        rootDir() {
-            this.dir = ''
-        },
-        deleteFile(f) {
-            Api.deleteFile(f).then(() => this.refresh())
-        }
+        fileClick(f) { if (f.isFolder) this.dir += '/' + f.name },
+        upDir() { this.dir = this.dir.split('/').slice(0, -1).join('/') },
+        refresh() { Api.getFiles(this.origin, this.$root).then(fl => this.rootFiles = fl) },
+        rootDir() { this.dir = '' },
+        deleteFile(f) { Api.deleteFile(f).then(() => this.refresh()) }
     },
     watch: {
         origin(n, o) {
