@@ -97,6 +97,14 @@ class Api {
     }
 
     static deleteFile(file) {
+        let deleteFileRequest = new Request(this.url + `api/files/${file.origin}/${file.path}`, { method: 'DELETE', headers: this.headers, mode: 'cors' })
 
+        return fetch(deleteFileRequest)
+            .then(processDeleteFileResponse)
+            .catch(e => console.log(e))
+
+        function processDeleteFileResponse(j) {
+
+        }
     }
 }

@@ -34,7 +34,7 @@ Vue.component('files', {
                 </span>
                 {{f.name}}
                 <span class="right">
-                    <i v-if="!f.isPrinting" class="fa fa-trash clickable-icon" title="Delete file" @click="refresh()"></i>
+                    <i v-if="!f.isPrinting" class="fa fa-trash clickable-icon" title="Delete file" @click.stop="deleteFile(f)"></i>
                     <i v-if="f.isGcode && !f.isPrinting && !$root.state.flags.printing" class="fa fa-print clickable-icon" title="Print This File" @click="$root.Api.printFile(f)"></i>
                 </span>
             </div>
@@ -61,6 +61,9 @@ Vue.component('files', {
         },
         rootDir() {
             this.dir = ''
+        },
+        deleteFile(f) {
+            Api.deleteFile(f).then(() => this.refresh())
         }
     },
     watch: {
