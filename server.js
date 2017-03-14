@@ -25,6 +25,7 @@ ipcMain.on('quit', () => app.quit())
 
 // Notifications
 ipcMain.on('notification', (e, arg) => {
+    console.log('notification request')
     if (!mb.window.isVisible()) notifier.notify(Object.assign(arg, {
         wait: true,
         appIcon: path.join(__dirname, 'app/icon.png'),

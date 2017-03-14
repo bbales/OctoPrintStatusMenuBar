@@ -23,7 +23,7 @@ Vue.component('status', {
                 <span class="dark">Job Completion:</span> {{jobCompletion}}
             </div>
             <div v-else>
-                No job in active
+                No job in progress.
             </div>
         </div>
         <div class="box no-right-border" style="width:35%">

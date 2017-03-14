@@ -12,20 +12,21 @@ class Api {
         return headers
     }
 
+    static problem() {
+        app.loading = true
+        app.problem = true
+    }
+
     static getJob() {
         var jobRequest = new Request(this.url + 'api/job', { headers: this.headers, mode: 'cors' })
         return fetch(jobRequest)
             .then(r => r.json())
             .then(processJob)
-            .catch(e => {
-                app.loading = true
-                app.problem = true
-            })
+            .catch(Api.problem)
 
         function processJob(j) {
             Vue.set(app, 'job', j.job)
             Vue.set(app, 'progress', j.progress)
-            console.log('job info', j)
             return app
         }
     }
@@ -35,10 +36,7 @@ class Api {
         return fetch(filesRequest)
             .then(r => r.json())
             .then(processFiles)
-            .catch(e => {
-                app.loading = true
-                app.problem = true
-            })
+            .catch(Api.problem)
 
         function processFiles(j) {
             return j.files.map(f => new PrinterFile(f, app))
@@ -50,10 +48,7 @@ class Api {
         return fetch(stateRequest)
             .then(r => r.json())
             .then(processState)
-            .catch(e => {
-                app.loading = true
-                app.problem = true
-            })
+            .catch(Api.problem)
 
         function processState(j) {
             Vue.set(app, 'state', j.state)
