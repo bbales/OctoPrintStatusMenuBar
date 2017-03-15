@@ -14,7 +14,7 @@ Vue.component('status', {
             <img src="icon.png" style="cursor:pointer;" width="14" alt="">
         </div>
         <div class="box" style="width:65%;height:123px;">
-            <div v-if="$root.progress.completion !== null">
+            <div v-if="$root.progress.completion > 0">
                 <span class="dark">Size:</span> {{$root.job.file.size | filesize}}<br>
                 <span class="dark">Date Uploaded:</span> {{$root.job.file.date | moment1}}<br><br>
                 <div v-show="$root.progress.printTimeLeft !== null">

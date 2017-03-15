@@ -35,6 +35,6 @@ Api.getJob()
         setInterval(() => {
             app.loading = false
             app.problem = false
-            Api.getJob().then(() => Api.getState())
-        }, 10000)
+            Api.getJob().then(() => Api.getState()).then(() => Vue.log(data))
+        }, data.problem ? 1000 : 5000)
     })

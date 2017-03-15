@@ -19,7 +19,7 @@ Vue.component('progress-canvas', {
         this.ctx.translate(-this.width - 1, -this.height - 1)
 
         // Animate to the current progress
-        this.setProgress(true).then(() => {})
+        this.setProgress(true)
     },
     destroyed() { this.flashing = false },
     watch: {
@@ -65,6 +65,7 @@ Vue.component('progress-canvas', {
         },
         setProgress(animate = false) {
             this.clearCanvas()
+            if (!this.$root.job.file.name) return
             this.drawGrid()
             return new Promise(res => {
                 // Current cursor position
@@ -110,7 +111,7 @@ Vue.component('progress-canvas', {
                     else if (cur.y % 2 && cur.x > 0) cur.x--;
                     else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
 
-                    this.drawText(this.height - 2 - cur.y * this.subSize, this.completion * cur.ratio)
+                    this.drawText(this.height - 2 - cur.y * this.subSize, (this.completion * cur.ratio) == NaN ? 0 : (this.completion * cur.ratio))
 
                     // Recursively call this function
                     if (cur.total < cur.max) animate && cur.x % 2 == 0 ? window.requestAnimationFrame(fillCells) : fillCells()
