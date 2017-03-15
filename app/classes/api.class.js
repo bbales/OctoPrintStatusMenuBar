@@ -83,4 +83,93 @@ class Api {
 
         return fetch(deleteFileRequest)
     }
+
+    static uploadFile(file, origin = 'local') {
+        var headers = new Headers()
+        headers.append('X-Api-Key', this.apiKey)
+        headers.append('Content-Type', 'multipart/form-data')
+
+        var reader = new FileReader()
+
+        reader.onload = e => {
+            var options = { headers, mode: 'cors', method: 'POST', body: e.currentTarget.result }
+            var uploadFileRequest = new Request(`${this.url}api/files/${origin}`, options)
+            fetch(uploadFileRequest)
+                .then(r => r.json())
+                .then(r => console.log('success', r))
+            // .catch(err => console.log('Request failed', err))
+
+        }
+
+        reader.readAsText(file)
+
+
+        return
+    }
+}
+
+
+function(url, file) {
+    var fileData = file;
+
+    var filesize = fileData.size
+
+    var form = new FormData()
+    form.append("file", fileData, fileData.name)
+
+    var deferred = $.Deferred()
+
+    var request = new XMLHttpRequest()
+    request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+            console.log({ loaded: filesize, total: filesize })
+
+            var success = request.status >= 200 && request.status < 300 || request.status === 304
+            var error, json, statusText
+
+            try {
+                json = JSON.parse(request.response)
+                statusText = "success"
+            } catch (e) {
+                success = false
+                error = e
+                statusText = "parsererror"
+            }
+
+            if (success) {
+                console.log('success', [json, statusText, request])
+            } else {
+                if (!statusText) statusText = request.statusText;
+                console.log('error', [request, statusText, error])
+            }
+        }
+    }
+
+    request.ontimeout = function() {
+        deferred.reject([request, "timeout", "Timeout"]);
+    }
+    request.upload.addEventListener("loadstart", function(e) {
+        deferred.notify({ loaded: e.loaded, total: e.total });
+    })
+    request.upload.addEventListener("progress", function(e) {
+        deferred.notify({ loaded: e.loaded, total: e.total });
+    })
+    request.upload.addEventListener("loadend", function(e) {
+        deferred.notify({ loaded: e.loaded, total: e.total });
+    })
+
+    var headers = OctoPrint.getRequestHeaders();
+
+    var urlToCall = url;
+    if (!_.startsWith(url, "http://") && !_.startsWith(url, "https://")) {
+        urlToCall = OctoPrint.getBaseUrl() + url;
+    }
+
+    request.open("POST", urlToCall);
+    _.each(headers, function(value, key) {
+        request.setRequestHeader(key, value);
+    });
+    request.send(form);
+
+    return deferred.promise();
 }

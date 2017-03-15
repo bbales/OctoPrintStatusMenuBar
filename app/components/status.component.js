@@ -17,14 +17,14 @@ Vue.component('status', {
             <div v-if="$root.progress.completion !== null">
                 <span class="dark">Size:</span> {{$root.job.file.size | filesize}}<br>
                 <span class="dark">Date Uploaded:</span> {{$root.job.file.date | moment1}}<br><br>
-                <span class="dark">Time Remaining:</span> {{$root.progress.printTimeLeft*1000 | duration-human}}<br>
-                <span class="dark">Current Print Time:</span> {{$root.progress.printTime*1000 | duration-human}}<br>
-                <span class="dark">Estimated Print Time:</span> {{$root.job.estimatedPrintTime*1000 | duration-human}}<br>
-                <span class="dark">Job Completion:</span> {{jobCompletion}}
+                <div v-show="$root.progress.printTimeLeft !== null">
+                    <span class="dark">Time Remaining:</span> {{$root.progress.printTimeLeft*1000 | duration-human}}<br>
+                    <span class="dark">Current Print Time:</span> {{$root.progress.printTime*1000 | duration-human}}<br>
+                    <span class="dark">Estimated Print Time:</span> {{$root.job.estimatedPrintTime*1000 | duration-human}}<br>
+                    <span class="dark">Job Completion:</span> {{jobCompletion}}
+                </div>
             </div>
-            <div v-else>
-                No job in progress.
-            </div>
+            <div v-else>No job in progress.</div>
         </div>
         <div class="box no-right-border" style="width:35%" v-show="$root.job.file">
             <progress-canvas :current="$root.progress.filepos" :total="$root.job.file.size"></progress-canvas>

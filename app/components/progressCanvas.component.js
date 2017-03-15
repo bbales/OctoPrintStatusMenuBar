@@ -23,7 +23,7 @@ Vue.component('progress-canvas', {
     },
     destroyed() { this.flashing = false },
     watch: {
-        current() {
+        current(n, o) {
             // Clear the last flashing animation
             this.flashing = false
 

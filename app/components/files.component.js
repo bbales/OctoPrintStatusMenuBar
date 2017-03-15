@@ -1,6 +1,6 @@
 Vue.component('files', {
     template: `
-    <div class="files no-select" v-if="$root.view == 'files'">
+    <div class="files no-select" v-show="$root.view == 'files'">
         <div class="box no-right-border" style="width:100%;">
             Files
             &nbsp;
@@ -9,6 +9,7 @@ Vue.component('files', {
             <i class="fa fa-home clickable-icon" title="Go To Root" v-show="dir !== ''" @click="rootDir()"></i>
             &nbsp;
             <span class="dark">{{dir}}</span>
+            <input type="file" ref="upload">
 
             <span class="clickable-icon" style="float:right;">
                 <span :class="origin !== 'local' ? 'dark' : ''" @click="origin = 'local'">
@@ -48,6 +49,10 @@ Vue.component('files', {
     }),
     mounted() {
         this.refresh()
+        this.$refs.upload.onchange = e => {
+            var f = this.$refs.upload.files[0]
+            Api.uploadFile(f)
+        }
     },
     methods: {
         fileClick(f) { if (f.isFolder) this.dir += '/' + f.name },
