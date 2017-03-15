@@ -84,92 +84,47 @@ class Api {
         return fetch(deleteFileRequest)
     }
 
-    static uploadFile(file, origin = 'local') {
-        var headers = new Headers()
-        headers.append('X-Api-Key', this.apiKey)
-        headers.append('Content-Type', 'multipart/form-data')
+    static uploadFile(file, origin = 'local', loader = false) {
+        return new Promise((res, rej) => {
+            // File upload form data
+            var form = new FormData()
+            form.append('file', file, file.name)
 
-        var reader = new FileReader()
+            var r = new XMLHttpRequest()
 
-        reader.onload = e => {
-            var options = { headers, mode: 'cors', method: 'POST', body: e.currentTarget.result }
-            var uploadFileRequest = new Request(`${this.url}api/files/${origin}`, options)
-            fetch(uploadFileRequest)
-                .then(r => r.json())
-                .then(r => console.log('success', r))
-            // .catch(err => console.log('Request failed', err))
+            r.onreadystatechange = () => {
+                if (r.readyState == 4) {
+                    console.log({ loaded: file.size, total: file.size })
 
-        }
+                    var error, json, statusText
 
-        reader.readAsText(file)
+                    try {
+                        json = JSON.parse(r.response)
+                        statusText = 'success'
+                    } catch (e) {
+                        success = false
+                        error = e
+                        statusText = 'parsererror'
+                    }
 
-
-        return
-    }
-}
-
-
-function(url, file) {
-    var fileData = file;
-
-    var filesize = fileData.size
-
-    var form = new FormData()
-    form.append("file", fileData, fileData.name)
-
-    var deferred = $.Deferred()
-
-    var request = new XMLHttpRequest()
-    request.onreadystatechange = function() {
-        if (request.readyState == 4) {
-            console.log({ loaded: filesize, total: filesize })
-
-            var success = request.status >= 200 && request.status < 300 || request.status === 304
-            var error, json, statusText
-
-            try {
-                json = JSON.parse(request.response)
-                statusText = "success"
-            } catch (e) {
-                success = false
-                error = e
-                statusText = "parsererror"
+                    let success = r.status >= 200 && r.status < 300 || r.status === 304
+                    if (success) return res([json, statusText, r])
+                    return rej([r, statusText ? statusText : r.statusText, error])
+                }
             }
 
-            if (success) {
-                console.log('success', [json, statusText, request])
-            } else {
-                if (!statusText) statusText = request.statusText;
-                console.log('error', [request, statusText, error])
+            // Loader events
+            if (loader) {
+                r.ontimeout = () => loader.timeout([r, 'timeout', 'Timeout'])
+                r.upload.addEventListener('loadstart', e => loader.start({ loaded: e.loaded, total: e.total }))
+                r.upload.addEventListener('progress', e => loader.progress({ loaded: e.loaded, total: e.total }))
+                r.upload.addEventListener('loadend', e => loader.end({ loaded: e.loaded, total: e.total }))
             }
-        }
+
+            // Dispatch request
+            r.open('POST', `${this.url}api/files/${origin}`)
+            r.setRequestHeader('X-Api-Key', this.apiKey)
+            r.send(form)
+        })
     }
-
-    request.ontimeout = function() {
-        deferred.reject([request, "timeout", "Timeout"]);
-    }
-    request.upload.addEventListener("loadstart", function(e) {
-        deferred.notify({ loaded: e.loaded, total: e.total });
-    })
-    request.upload.addEventListener("progress", function(e) {
-        deferred.notify({ loaded: e.loaded, total: e.total });
-    })
-    request.upload.addEventListener("loadend", function(e) {
-        deferred.notify({ loaded: e.loaded, total: e.total });
-    })
-
-    var headers = OctoPrint.getRequestHeaders();
-
-    var urlToCall = url;
-    if (!_.startsWith(url, "http://") && !_.startsWith(url, "https://")) {
-        urlToCall = OctoPrint.getBaseUrl() + url;
-    }
-
-    request.open("POST", urlToCall);
-    _.each(headers, function(value, key) {
-        request.setRequestHeader(key, value);
-    });
-    request.send(form);
-
-    return deferred.promise();
 }

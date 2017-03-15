@@ -54,6 +54,10 @@ body {
 .center {
   text-align: center; }
 
+.fade {
+  transition-property: opacity;
+  transition-duration: 200ms; }
+
 .margin-one-top {
   margin-top: 1rem; }
 
@@ -128,20 +132,11 @@ body {
   border-right: 1px solid #2B2B2B;
   padding: 10px 10px;
   float: left; }
-  .box.w30 {
-    width: 30%; }
-  .box.w40 {
-    width: 40%; }
-  .box.w60 {
-    width: 60%; }
   .box.no-right-border {
     border-right: 0px; }
-  .box.w70 {
-    width: 70%;
-    float: left; }
 
 .icon {
-  cursor: pointer !important; }
+  cursor: pointer; }
   .icon:hover {
     background-color: rgba(0, 0, 0, 0.2); }
 
@@ -166,7 +161,7 @@ input[type='text'], input[type='password'] {
 
 .scroller {
   height: 178px;
-  overflow: auto;
+  overflow: scroll-y;
   width: 98%; }
 
 /*# sourceMappingURL=main.css.map */

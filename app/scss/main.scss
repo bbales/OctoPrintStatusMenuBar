@@ -22,6 +22,10 @@ body{
 .left{float:left}
 .right{float:right}
 .center{text-align:center}
+.fade{
+    transition-property: opacity;
+    transition-duration: 200ms;
+}
 
 .margin-one-top{margin-top:1rem}
 .margin-one-bottom{margin-bottom:1rem}

@@ -12,7 +12,7 @@ mb.on('ready', () => mb.showWindow())
 mb.on('ready', () => mb.window.toggleDevTools())
 
 // Hide it when the user clicks away
-mb.on('focus-lost', () => mb.hideWindow())
+// mb.on('focus-lost', () => mb.hideWindow())
 
 // Focus on the window whenever it is shown
 mb.on('after-show', () => mb.window.focus())

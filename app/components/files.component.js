@@ -6,10 +6,13 @@ Vue.component('files', {
             &nbsp;
             <i class="fa fa-refresh clickable-icon" title="Refresh" @click="refresh()"></i>
             &nbsp;
+            <i class="fa fa-upload clickable-icon" title="Upload File" @click="chooseFile()"></i>
+            &nbsp;
             <i class="fa fa-home clickable-icon" title="Go To Root" v-show="dir !== ''" @click="rootDir()"></i>
             &nbsp;
             <span class="dark">{{dir}}</span>
-            <input type="file" ref="upload">
+            <input type="file" ref="upload" v-show="false">
+            <simple-upload-progress ref="progress"></simple-upload-progress>
 
             <span class="clickable-icon" style="float:right;">
                 <span :class="origin !== 'local' ? 'dark' : ''" @click="origin = 'local'">
@@ -51,7 +54,9 @@ Vue.component('files', {
         this.refresh()
         this.$refs.upload.onchange = e => {
             var f = this.$refs.upload.files[0]
-            Api.uploadFile(f)
+            Api.uploadFile(f, this.origin, this.$refs.progress)
+                .then(() => this.refresh())
+                .catch(() => console.log('problem uploading'))
         }
     },
     methods: {
@@ -59,7 +64,8 @@ Vue.component('files', {
         upDir() { this.dir = this.dir.split('/').slice(0, -1).join('/') },
         refresh() { Api.getFiles(this.origin, this.$root).then(fl => this.rootFiles = fl) },
         rootDir() { this.dir = '' },
-        deleteFile(f) { Api.deleteFile(f).then(() => this.refresh()) }
+        deleteFile(f) { Api.deleteFile(f).then(() => this.refresh()) },
+        chooseFile() { this.$refs.upload.click() }
     },
     watch: {
         origin(n, o) {
