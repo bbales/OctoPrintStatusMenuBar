@@ -12,17 +12,30 @@ class Api {
         return { headers, mode: 'cors' }
     }
 
-    static problem() {
-        app.loading = true
-        app.problem = true
+    static poll() {
+        Api.getJob()
+            .then(() => Api.getState())
+            .then(() => {
+                app.loading = false
+                app.problem = false
+                return window.wait(5000).then(Api.poll)
+            })
+            .catch(e => {
+                if (e.toString() == 'TypeError: Failed to fetch') app.problemText = 'OctoPrint not responding.'
+                app.loading = true
+                app.problem = true
+                return window.wait(1000).then(Api.poll)
+            })
     }
 
     static getJob() {
         let jobRequest = new Request(`${this.url}api/job`, this.headers)
         return fetch(jobRequest)
+            .then(r => {
+                if (!r.ok) throw Error(r.statusText)
+            })
             .then(r => r.json())
             .then(processJob)
-            .catch(Api.problem)
 
         function processJob(j) {
             app.job = j.job
@@ -35,7 +48,6 @@ class Api {
         return fetch(filesRequest)
             .then(r => r.json())
             .then(processFiles)
-            .catch(Api.problem)
 
         function processFiles(j) {
             return j.files.map(f => new PrinterFile(f))
@@ -47,10 +59,8 @@ class Api {
         return fetch(stateRequest)
             .then(r => r.json())
             .then(processState)
-            .catch(Api.problem)
 
         function processState(j) {
-            // Vue.set(app, 'state', j.state)
             app.state = j.state
         }
     }

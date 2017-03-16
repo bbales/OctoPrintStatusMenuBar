@@ -28,13 +28,4 @@ const data = {
 const app = new Vue({ data, el: '#app' })
 
 // Start polling
-Api.getJob()
-    .then(() => Api.getState())
-    .then(() => {
-        app.loading = false
-        setInterval(() => {
-            app.loading = false
-            app.problem = false
-            Api.getJob().then(() => Api.getState()).then(() => Vue.log(data))
-        }, data.problem ? 1000 : 5000)
-    })
+Api.poll()
