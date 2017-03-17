@@ -1,5 +1,5 @@
 Vue.component('setup', {
-    data: () => ({ apiKey: '', url: '', notifications: false }),
+    data: () => ({ apiKey: '', url: '', notificationsEnabled: false }),
     template: `
     <div class="setup" v-if="$root.view == 'setup'">
         <div class="box no-right-border" style="width:100%; margin-bottom:10px;">Setup</div>
@@ -13,11 +13,15 @@ Vue.component('setup', {
         </div>
 
         <div class="ip">
-            <div class="label">Enable Notifications</div> <input type="checkbox" v-model="notificationsEnabled">
+            <div class="label">Enable Notifications</div>
+            <div class="checkbox" @click="notificationsEnabled = !notificationsEnabled"><i v-if="notificationsEnabled" class="fa fa-check"></i><i v-else>&nbsp;</i></div>
         </div>
 
-        <button @click="save()">Save</button>
-        <button @click="quit()">Quit</button>
+        <div class="ip">
+            <button @click="save()">Save</button>
+            <button @click="quit()">Quit</button>
+        </div>
+
     </div>
     `,
     mounted() {

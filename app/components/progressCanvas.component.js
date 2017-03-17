@@ -20,10 +20,8 @@ Vue.component('progress-canvas', {
 
         // Animate to the current progress
         this.setProgress(true)
-    },
-    destroyed() { this.flashing = false },
-    watch: {
-        current(n, o) {
+
+        this.$root.$on('polled', () => {
             // Clear the last flashing animation
             this.flashing = false
 
@@ -31,8 +29,9 @@ Vue.component('progress-canvas', {
             window.requestAnimationFrame(() => this.setProgress())
 
             if (this.completion >= 1) Native.printComplete()
-        }
+        })
     },
+    destroyed() { this.flashing = false },
     methods: {
         clearCanvas() { this.ctx.clearRect(0, 0, this.width + 2, this.height + 2) },
         clearCell(x, y) { this.ctx.clearRect(x * this.subSize + 1, y * this.subSize + 1, this.subSize - 1, this.subSize - 1) },

@@ -146,11 +146,13 @@ body {
   width: 140px;
   float: left;
   margin-right: 10px;
-  padding-left: 10px;
   line-height: 25px;
   vertical-align: middle; }
 
-input[type='text'], input[type='password'] {
+.ip {
+  padding-left: 10px; }
+
+input[type='text'], input[type='password'], .checkbox {
   margin-bottom: 5px;
   width: 220px;
   padding: 5px 5px;
@@ -159,6 +161,32 @@ input[type='text'], input[type='password'] {
   background-color: #2B2B2B;
   font-size: 12px;
   color: #999999; }
+  input[type='text']:focus, input[type='password']:focus, .checkbox:focus {
+    background-color: #282828; }
+
+button {
+  margin-top: 10px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: #2B2B2B;
+  font-size: 12px;
+  color: #999999; }
+  button:hover {
+    background-color: #282828; }
+  button:active {
+    background-color: #232323; }
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer; }
+  .checkbox:hover {
+    background-color: #282828; }
 
 .scroller {
   height: 178px;

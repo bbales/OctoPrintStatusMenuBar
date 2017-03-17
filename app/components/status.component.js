@@ -24,7 +24,6 @@ Vue.component('status', {
                     <span class="dark">Job Completion:</span> {{jobCompletion}}
                 </div>
             </div>
-            <div v-else>No job in progress.</div>
         </div>
         <div class="box no-right-border" style="width:35%" v-show="$root.job.file">
             <progress-canvas :current="$root.progress.filepos" :total="$root.job.file.size"></progress-canvas>
