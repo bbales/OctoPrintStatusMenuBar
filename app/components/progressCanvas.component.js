@@ -7,7 +7,7 @@ Vue.component('progress-canvas', {
     props: ['current', 'total'],
     data: () => ({ height: 100, width: 70, subSize: 5, flashing: false }),
     computed: {
-        subs() { return { x: Math.floor((this.width - 1) / this.subSize), y: Math.floor((this.height - 1) / this.subSize) } },
+        subs() { return { x: Math.floor((this.width - 1) / this.subSize), y: 1 + Math.floor((this.height - 1) / this.subSize) } },
         completion() { return this.current / this.total }
     },
     mounted() {
@@ -27,10 +27,10 @@ Vue.component('progress-canvas', {
             // Clear the last flashing animation
             this.flashing = false
 
-            if (this.completion >= 1) Notification.printComplete()
-
             // Go to the current progress
-            else window.requestAnimationFrame(() => this.setProgress())
+            window.requestAnimationFrame(() => this.setProgress())
+
+            if (this.completion >= 1) Notification.printComplete()
         }
     },
     methods: {
@@ -52,12 +52,15 @@ Vue.component('progress-canvas', {
 
             this.ctx.clearRect(this.width + 1, this.height * 3, 45 + 2, -this.height * 3)
 
-            this.ctx.fillStyle = 'white'
-            this.ctx.font = '10px Helvetica'
-            this.ctx.fillText((100 * percent).toFixed(2) + '%', this.width + 7, y + (percent > 0.9 ? 13 : -1))
+            // Draw the percentage indicator
+            if (!isNaN(100 * percent)) {
+                this.ctx.fillStyle = 'white'
+                this.ctx.font = '10px Helvetica'
+                this.ctx.fillText((100 * percent).toFixed(2) + '%', this.width + 7, y + (percent > 0.9 ? 13 : -1))
 
-            this.ctx.fillStyle = '#2B2B2B'
-            this.ctx.fillRect(this.width, y + 2, 41, 1)
+                this.ctx.fillStyle = '#2B2B2B'
+                this.ctx.fillRect(this.width, y + 2, 41, 1)
+            }
 
             // Flip and translate
             this.ctx.rotate(Math.PI)
@@ -89,7 +92,7 @@ Vue.component('progress-canvas', {
                     if (s < 0) this.flashing = true
 
                     // Fill cell for flash length
-                    if (s > 60 * flashLength / 1000) this.fillCell(cur.x, cur.y, 1)
+                    if (s > 60 * flashLength / 1000 || this.completion >= 1) this.fillCell(cur.x, cur.y, 1)
 
                     // Clear cell for flash length
                     else this.clearCell(cur.x, cur.y)

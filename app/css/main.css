@@ -34,7 +34,8 @@ body {
   background-color: #2B2B2B;
   font-family: Helvetica, sans-serif;
   font-size: 12px;
-  margin: 0 0; }
+  margin: 0 0;
+  overflow: hidden; }
 
 .light-bg {
   background-color: rgba(0, 0, 0, 0.2); }
@@ -161,7 +162,8 @@ input[type='text'], input[type='password'] {
 
 .scroller {
   height: 178px;
-  overflow: scroll-y;
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 98%; }
 
 /*# sourceMappingURL=main.css.map */

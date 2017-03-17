@@ -18,23 +18,23 @@ class Api {
             .then(() => {
                 app.loading = false
                 app.problem = false
-                return window.wait(5000).then(Api.poll)
+                app.$emit('polled')
+                return Wait(1000).then(Api.poll)
             })
             .catch(e => {
+                console.log(e)
                 if (e.toString() == 'TypeError: Failed to fetch') app.problemText = 'OctoPrint not responding.'
                 app.loading = true
                 app.problem = true
-                return window.wait(1000).then(Api.poll)
+                app.$emit('polled')
+                return Wait(600).then(Api.poll)
             })
     }
 
     static getJob() {
         let jobRequest = new Request(`${this.url}api/job`, this.headers)
         return fetch(jobRequest)
-            .then(r => {
-                if (!r.ok) throw Error(r.statusText)
-            })
-            .then(r => r.json())
+            .json()
             .then(processJob)
 
         function processJob(j) {
@@ -45,8 +45,7 @@ class Api {
 
     static getFiles(origin) {
         let filesRequest = new Request(`${this.url}api/files/${origin}?recursive=true`, this.headers)
-        return fetch(filesRequest)
-            .then(r => r.json())
+        return fetch(filesRequest).json()
             .then(processFiles)
 
         function processFiles(j) {
@@ -55,20 +54,26 @@ class Api {
     }
 
     static getState() {
-        let stateRequest = new Request(`${this.url}api/printer?exclude=temperature`, this.headers)
-        return fetch(stateRequest)
-            .then(r => r.json())
+        let stateRequest = new Request(`${this.url}api/printer`, this.headers)
+        return fetch(stateRequest).json()
             .then(processState)
 
         function processState(j) {
             app.state = j.state
+
+            // Push new temp into history
+            let newTemp = Object.assign(j.temperature, { ts: Math.round(Date.now() / 1000) })
+            app.temperature.push(newTemp)
+
+            // Only keep the last 10 minutes
+            app.temperature.filter(t => newTemp.ts - t.ts < 300)
         }
     }
 
     static sendJobCommand(command) {
         let commandRequest = new Request(`${this.url}api/job`, Object.assign({}, this.headers, { method: 'POST', body: JSON.stringify(command) }))
         return fetch(commandRequest)
-            .then(() => window.wait(200).then(() => Api.getJob().then(() => Api.getState())))
+            .then(() => Wait(200).then(() => Api.getJob().then(() => Api.getState())))
     }
 
     static toggleJob() {
@@ -85,7 +90,7 @@ class Api {
         let printFileRequest = new Request(`${this.url}api/files/${file.origin}/${file.path}`, Object.assign({}, this.headers, { method: 'POST', body }))
 
         return fetch(printFileRequest)
-            .then(() => window.wait(200).then(() => Api.getJob().then(() => Api.getState())))
+            .then(() => Wait(200).then(() => Api.getJob().then(() => Api.getState())))
     }
 
     static deleteFile(file) {

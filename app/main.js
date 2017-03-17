@@ -5,6 +5,7 @@ const data = {
     Api: Api,
     job: {},
     progress: {},
+    temperature: [],
     state: {},
     view: 'status',
     loading: true,
@@ -24,8 +25,15 @@ const data = {
     }]
 }
 
+
 // Instantiate
 const app = new Vue({ data, el: '#app' })
 
 // Start polling
 Api.poll()
+
+function whatsup() {
+    Vue.log(app.state)
+    Vue.log(app.progress)
+    Vue.log(app.job)
+}

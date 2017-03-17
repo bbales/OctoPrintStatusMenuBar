@@ -16,7 +16,7 @@ Vue.component('simple-upload-progress', {
         },
         end(o) {
             this.text = 'Complete!'
-            window.wait(1000).then(() => this.opacity = 0)
+            Wait(1000).then(() => this.opacity = 0)
         },
         timeout(o) {
             console.log('Upload Timeout')

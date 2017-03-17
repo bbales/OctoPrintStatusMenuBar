@@ -15,12 +15,12 @@ Vue.component('status', {
         </div>
         <div class="box" style="width:65%;height:123px;">
             <div v-if="$root.progress.completion > 0">
-                <span class="dark">Size:</span> {{$root.job.file.size | filesize}}<br>
+                <span class="dark">File Size:</span> {{$root.job.file.size | filesize}}<br>
                 <span class="dark">Date Uploaded:</span> {{$root.job.file.date | moment1}}<br><br>
                 <div v-show="$root.progress.printTimeLeft !== null">
                     <span class="dark">Time Remaining:</span> {{$root.progress.printTimeLeft*1000 | duration-human}}<br>
                     <span class="dark">Current Print Time:</span> {{$root.progress.printTime*1000 | duration-human}}<br>
-                    <span class="dark">Estimated Print Time:</span> {{$root.job.estimatedPrintTime*1000 | duration-human}}<br>
+                    <span class="dark">Est. Print Time:</span> {{$root.job.estimatedPrintTime*1000 | duration-human}}<br>
                     <span class="dark">Job Completion:</span> {{jobCompletion}}
                 </div>
             </div>
@@ -29,28 +29,13 @@ Vue.component('status', {
         <div class="box no-right-border" style="width:35%" v-show="$root.job.file">
             <progress-canvas :current="$root.progress.filepos" :total="$root.job.file.size"></progress-canvas>
         </div>
+        <temperature-canvas></temperature-canvas>
     </div>
     `,
-    mounted() {
-        let offset = Date.now()
-        let start = this.$root.progress.printTimeLeft
-        this.countDown = setInterval(() => {
-            if (this.$root.state.text == 'Printing')
-                this.$root.progress.printTimeLeft = start - Math.ceil((Date.now() - offset) / 1000)
-        }, 1200)
-    },
-    destroyed() {
-        clearInterval(this.countDown)
-    },
+    mounted() {},
     methods: {
         openLink() {
             ipcRenderer.send('open-in-browser', Api.url)
-        }
-    },
-    watch: {
-        'progress.printTime' () {
-            clearInterval(this.countDown)
-            this.mounted()
         }
     },
     computed: {
