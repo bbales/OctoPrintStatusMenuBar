@@ -55,8 +55,14 @@ Vue.component('files', {
         this.$refs.upload.onchange = e => {
             var f = this.$refs.upload.files[0]
             Api.uploadFile(f, this.origin, this.$refs.progress)
-                .then(() => this.refresh())
-                .catch(() => console.log('problem uploading'))
+                .then(() => {
+                    this.refresh()
+                    Native.enableHide()
+                })
+                .catch(() => {
+                    console.log('problem uploading')
+                    Native.enableHide()
+                })
         }
     },
     methods: {
@@ -65,7 +71,10 @@ Vue.component('files', {
         refresh() { Api.getFiles(this.origin, this.$root).then(fl => this.rootFiles = fl) },
         rootDir() { this.dir = '' },
         deleteFile(f) { Api.deleteFile(f).then(() => this.refresh()) },
-        chooseFile() { this.$refs.upload.click() }
+        chooseFile() {
+            Native.disableHide()
+            this.$refs.upload.click()
+        }
     },
     watch: {
         origin(n, o) {

@@ -22,7 +22,6 @@ class Api {
                 return Wait(1000).then(Api.poll)
             })
             .catch(e => {
-                console.log(e)
                 if (e.toString() == 'TypeError: Failed to fetch') app.problemText = 'OctoPrint not responding.'
                 app.loading = true
                 app.problem = true

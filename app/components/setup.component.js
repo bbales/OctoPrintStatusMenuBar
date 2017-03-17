@@ -33,15 +33,15 @@ Vue.component('setup', {
             Api.url = this.url
 
             // Save notifications setting
-            Notification.notificationsEnabled = !!this.notificationsEnabled
+            Native.notificationsEnabled = !!this.notificationsEnabled
         },
         retrieve() {
             this.url = Api.url
             this.apiKey = Api.apiKey
-            this.notificationsEnabled = Notification.notificationsEnabled
+            this.notificationsEnabled = Native.notificationsEnabled
         },
         quit() {
-            ipcRenderer.send('quit')
+            Native.quit()
         }
     }
 })
