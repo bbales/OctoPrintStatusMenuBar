@@ -16,7 +16,7 @@ Vue.component('temperature-canvas', {
                         let m = Object.values(tool).sort((a, b) => a < b)[0]
                         return m > high ? m : high
                     }, highest)
-            }, 0) + 10
+            }, 0) * 1.10 + 10
         },
     },
     mounted() {
