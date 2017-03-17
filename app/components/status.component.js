@@ -28,7 +28,7 @@ Vue.component('status', {
         <div class="box no-right-border" style="width:35%" v-show="$root.job.file">
             <progress-canvas :current="$root.progress.filepos" :total="$root.job.file.size"></progress-canvas>
         </div>
-        <temperature-canvas v-show="$root.state.operational"></temperature-canvas>
+        <temperature-canvas v-if="$root.state.operational"></temperature-canvas>
     </div>
     `,
     mounted() {},

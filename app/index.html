@@ -16,14 +16,14 @@
 				<div v-if="!problem">
 					<i class="fa fa-circle-o-notch fa-2x fa-spin"></i>
 					<br><br>
-					Loading
+                    {{loadingText ? loadingText : 'Loading'}}
 				</div>
 				<div v-else>
 					<i class="fa fa-frown-o fa-2x"></i>
 					<br><br>
 					Something Went Wrong.<br>
-                    Is OctoPrint Running?<br>
-					Make Sure Setup is Complete.
+                    {{problemText ? problemText : ''}}<br>
+					Verify Setup.
 				</div>
 			</div>
 			<div v-if="!loading && !problem">

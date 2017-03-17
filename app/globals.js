@@ -37,4 +37,9 @@ Vue.log = (...o) => console.log(...(o.map(i => i === undefined ? undefined : JSO
 
 Wait = ms => new Promise(rs => setTimeout(() => rs(), ms))
 
-Promise.prototype.json = function() { return this.then(r => r.json()) }
+Promise.prototype.json = function() {
+    return this.then(r => {
+        if (!r.ok) throw r.status
+        return r.json()
+    })
+}

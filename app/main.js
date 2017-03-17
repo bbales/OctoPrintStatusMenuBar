@@ -9,7 +9,9 @@ const data = {
     state: {},
     view: 'status',
     loading: true,
+    loadingText: '',
     problem: false,
+    problemText: '',
     tabs: [{
         name: 'status',
         label: 'Status',

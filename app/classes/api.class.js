@@ -23,8 +23,15 @@ class Api {
             })
             .catch(e => {
                 if (e.toString() == 'TypeError: Failed to fetch') app.problemText = 'OctoPrint not responding.'
+                else app.problemText = ''
                 app.loading = true
                 app.problem = true
+                if (e == 502 || e == 409) {
+                    app.loadingText = 'Connecting to OctoPrint.'
+                    app.problem = false
+                } else {
+                    app.loadingText = ''
+                }
                 app.$emit('polled')
                 return Wait(600).then(Api.poll)
             })
