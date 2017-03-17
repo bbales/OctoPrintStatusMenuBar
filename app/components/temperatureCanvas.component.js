@@ -29,13 +29,17 @@ Vue.component('temperature-canvas', {
     methods: {
         clearCanvas() { this.ctx.clearRect(0, 0, this.width + 2, this.height + 2) },
         connectPoints(coord1, coord2, tool) {
-            this.ctx.strokeStyle = 'white'
+            let gre = 'rgba(27,209,45,'
+            let pur = 'rgba(90,27,209,'
+            let col = tool ? gre : pur
+
+            this.ctx.strokeStyle = col + '1)'
             this.ctx.beginPath()
             this.ctx.moveTo(coord1.x, coord1.tools[tool].actual)
             this.ctx.lineTo(coord2.x, coord2.tools[tool].actual)
             this.ctx.stroke()
 
-            this.ctx.strokeStyle = 'red'
+            this.ctx.strokeStyle = col + '0.5)'
             this.ctx.beginPath()
             this.ctx.moveTo(coord1.x, coord1.tools[tool].target)
             this.ctx.lineTo(coord2.x, coord2.tools[tool].target)

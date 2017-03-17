@@ -14,7 +14,7 @@ Vue.component('pause-resume-stop', {
             return this.$root.state.flags && this.$root.state.flags.printing
         },
         showStop() {
-            return this.$root.state.flags && this.$root.state.flags.printing
+            return this.$root.state.flags && (this.$root.state.flags.printing || this.$root.state.flags.paused)
         },
     }
 })
