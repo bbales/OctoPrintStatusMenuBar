@@ -28,7 +28,11 @@ Vue.component('progress-canvas', {
             // Go to the current progress
             window.requestAnimationFrame(() => this.setProgress())
 
-            if (this.completion >= 1) Native.printComplete()
+            if (this.completion >= 1 && !this.completeSent) {
+                Native.printComplete()
+                this.completeSent = true
+            }
+            if (this.completion < 1) this.completeSent = false
         })
     },
     destroyed() { this.flashing = false },
