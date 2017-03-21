@@ -36,7 +36,7 @@ Vue.component('files', {
                     <i v-if="f.isFolder" title="Folder" class="fa fa-folder"></i>
                     <i v-if="!f.isFolder && !f.isPrinting" class="fa fa-cube"></i>
                 </span>
-                {{f.name}}
+                <text-scroller :text="f.name" :max="50" :hover="true"></text-scroller>
                 <span class="right">
                     <i v-if="!f.isPrinting" class="fa fa-trash clickable-icon" title="Delete file" @click.stop="deleteFile(f)"></i>
                     <i v-if="f.isGcode && !f.isPrinting && !$root.state.flags.printing" class="fa fa-print clickable-icon" title="Print This File" @click="$root.Api.printFile(f)"></i>
