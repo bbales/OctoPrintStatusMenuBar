@@ -46,6 +46,9 @@ body {
 .green {
   color: #1bd12d; }
 
+.purple {
+  color: #5a1bd1; }
+
 .left {
   float: left; }
 
@@ -193,5 +196,16 @@ button {
   overflow-y: auto;
   overflow-x: hidden;
   width: 98%; }
+
+.temperatures {
+  top: 15px;
+  left: 10px;
+  position: absolute;
+  font-size: 9pt;
+  background-color: #191919; }
+  .temperatures .purple {
+    color: #9567eb !important; }
+  .temperatures .green {
+    color: #67eb74 !important; }
 
 /*# sourceMappingURL=main.css.map */

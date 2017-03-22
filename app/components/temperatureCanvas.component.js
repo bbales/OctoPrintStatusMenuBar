@@ -1,6 +1,9 @@
 Vue.component('temperature-canvas', {
     template: `
-    <div class="temperature-canvas left" style="width:400px;height:55px">
+    <div class="temperature-canvas left" style="position:relative;width:400px;height:55px">
+        <div class="temperatures">
+            <div v-for="t,k,i in currentTemps" :class="i % 2 ? 'green' : 'purple'" v-if="k!=='ts'">{{k}}: {{t.actual}}/{{t.target}}</div>
+        </div>
         <canvas ref="tcan" :width="width" :height="height"></canvas>
     </div>
     `,
@@ -18,6 +21,9 @@ Vue.component('temperature-canvas', {
                     }, highest)
             }, 0) * 1.10 + 10
         },
+        currentTemps() {
+            return this.$root.temperature[this.$root.temperature.length - 1]
+        }
     },
     mounted() {
         // Set up the canvas
@@ -46,6 +52,7 @@ Vue.component('temperature-canvas', {
             this.ctx.stroke()
         },
         drawTemps() {
+            Vue.log(this.currentTemps)
             // Clear it
             this.clearCanvas()
 

@@ -20,6 +20,7 @@ body{
 .light-bg{background-color:rgba(0,0,0,0.2)}
 .dark{color:$dark-text}
 .green{color:$green-text}
+.purple{color:$purp-text}
 .left{float:left}
 .right{float:right}
 .center{text-align:center}
@@ -171,4 +172,18 @@ button{
     overflow-y:auto;
     overflow-x:hidden;
     width:98%;
+}
+
+.temperatures{
+    .purple{
+        color:lighten($purp-text,20%) !important;
+    }
+    .green{
+        color:lighten($green-text,20%) !important;
+    }
+    top:15px;
+    left:10px;
+    position:absolute;
+    font-size:9pt;
+    background-color: $bg;
 }
