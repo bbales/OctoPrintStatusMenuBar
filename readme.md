@@ -28,6 +28,7 @@ To run the **electron app**:
 #### How do I get this working with my OctoPrint installation
 
 Setup is fairly straightforward. There are only two required settings, your **OctoPrint URL** and your **API Key**. My Installation of OctoPrint is located on a Raspberry Pi on my local network, so my URL is simply: `http://octopi.local/`. Your API key can be found by navigating to the OctoPrint web-app and following `Settings->Features->API`. Check **Enable** as well as `Allow Cross Origin Resource Sharing (CORS)` and copy your API key to the clipboard. You must then paste this information into the setup tab of the application:
+<div style="text-align:center"><img src ="https://github.com/bbales/OctoPrintStatusMenuBar/blob/master/docs/setup.png"></div>
 
 ### Contributing
 
