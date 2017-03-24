@@ -72,7 +72,7 @@ class Api {
             app.temperature.push(newTemp)
 
             // Only keep the last 10 minutes
-            app.temperature.filter(t => newTemp.ts - t.ts < 300)
+            app.temperature = app.temperature.filter(t => newTemp.ts - t.ts < 300)
         }
     }
 
