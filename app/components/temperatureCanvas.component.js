@@ -52,7 +52,6 @@ Vue.component('temperature-canvas', {
             this.ctx.stroke()
         },
         drawTemps() {
-            Vue.log(this.currentTemps)
             // Clear it
             this.clearCanvas()
 
