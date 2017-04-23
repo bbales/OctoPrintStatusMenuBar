@@ -34,23 +34,6 @@ Vue.component('temperature-canvas', {
     },
     methods: {
         clearCanvas() { this.ctx.clearRect(0, 0, this.width + 2, this.height + 2) },
-        connectPoints(coord1, coord2, tool) {
-            let gre = 'rgba(27,209,45,'
-            let pur = 'rgba(90,27,209,'
-            let col = tool ? gre : pur
-
-            this.ctx.strokeStyle = col + '1)'
-            this.ctx.beginPath()
-            this.ctx.moveTo(coord1.x, coord1.tools[tool].actual)
-            this.ctx.lineTo(coord2.x, coord2.tools[tool].actual)
-            this.ctx.stroke()
-
-            this.ctx.strokeStyle = col + '0.5)'
-            this.ctx.beginPath()
-            this.ctx.moveTo(coord1.x, coord1.tools[tool].target)
-            this.ctx.lineTo(coord2.x, coord2.tools[tool].target)
-            this.ctx.stroke()
-        },
         drawTemps() {
             // Clear it
             this.clearCanvas()
@@ -70,18 +53,20 @@ Vue.component('temperature-canvas', {
                 }
             }
 
-            let coords, oldCoords;
+            var gre = 'rgba(27,209,45,';
+            var pur = 'rgba(90,27,209,';
 
-            for (let i = 0; i < this.$root.temperature.length; i++) {
-                coords = calc(this.$root.temperature[i])
-
-                if (oldCoords) {
-                    for (let j = 0; j < coords.tools.length; j++) this.connectPoints(oldCoords, coords, j)
-                }
-
-                oldCoords = coords
-            }
+            [0, 1].forEach(j => {
+                ['target', 'actual'].forEach((t, k) => {
+                    this.ctx.strokeStyle = (j == 0 ? pur : gre) + '' + (k == 0 ? 0.6 : 1.0) + ')'
+                    this.ctx.beginPath()
+                    for (let i = 0; i < this.$root.temperature.length; i++) {
+                        let coord = calc(this.$root.temperature[i])
+                        this.ctx[i == 0 ? 'moveTo' : 'lineTo'](coord.x, coord.tools[j][t])
+                    }
+                    this.ctx.stroke()
+                })
+            })
         }
-
     }
 })
