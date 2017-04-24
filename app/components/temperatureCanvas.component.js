@@ -10,17 +10,6 @@ Vue.component('temperature-canvas', {
     props: ['current', 'total'],
     data: () => ({ height: 55, width: 400 }),
     computed: {
-        highestTemp() {
-            return this.$root.temperature.reduce((highest, temp) => {
-                return Object.keys(temp)
-                    .filter(k => k !== 'ts')
-                    .map(k => temp[k])
-                    .reduce((high, tool) => {
-                        let m = Object.values(tool).sort((a, b) => a < b)[0]
-                        return m > high ? m : high
-                    }, highest)
-            }, 0) * 1.10 + 10
-        },
         currentTemps() {
             return this.$root.temperature[this.$root.temperature.length - 1]
         }
@@ -33,13 +22,24 @@ Vue.component('temperature-canvas', {
         this.$root.$on('polled', () => this.drawTemps())
     },
     methods: {
+        highestTemp() {
+            return this.$root.temperature.reduce((highest, temp) => {
+                return Object.keys(temp)
+                    .filter(k => k !== 'ts')
+                    .map(k => temp[k])
+                    .reduce((high, tool) => {
+                        let m = Object.values(tool).sort((a, b) => a < b)[0]
+                        return m > high ? m : high
+                    }, highest)
+            }, 0) * 1.10 + 10
+        },
         clearCanvas() { this.ctx.clearRect(0, 0, this.width + 2, this.height + 2) },
         drawTemps() {
             // Clear it
             this.clearCanvas()
 
             // Store the current highest for a ceiling
-            var highest = this.highestTemp
+            var highest = this.highestTemp()
 
             let calc = t => {
                 return {
@@ -56,13 +56,15 @@ Vue.component('temperature-canvas', {
             var gre = 'rgba(27,209,45,';
             var pur = 'rgba(90,27,209,';
 
-            [0, 1].forEach(j => {
-                ['target', 'actual'].forEach((t, k) => {
-                    this.ctx.strokeStyle = (j == 0 ? pur : gre) + '' + (k == 0 ? 0.6 : 1.0) + ')'
+            // Run for each tool
+            [0, 1].forEach(tool => {
+                // Run for setpoint and reading
+                ['target', 'actual'].forEach(t => {
+                    this.ctx.strokeStyle = `${tool ? pur : gre}${t == 'actual' ? 0.6 : 1.0})`
                     this.ctx.beginPath()
                     for (let i = 0; i < this.$root.temperature.length; i++) {
                         let coord = calc(this.$root.temperature[i])
-                        this.ctx[i == 0 ? 'moveTo' : 'lineTo'](coord.x, coord.tools[j][t])
+                        this.ctx[i == 0 ? 'moveTo' : 'lineTo'](coord.x, coord.tools[tool][t])
                     }
                     this.ctx.stroke()
                 })

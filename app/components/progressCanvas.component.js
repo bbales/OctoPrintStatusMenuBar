@@ -21,9 +21,13 @@ Vue.component('progress-canvas', {
         // Animate to the current progress
         this.setProgress(true)
 
+        this.flashCell = () => {
+            window.requestAnimationFrame(() => this.flashCell())
+        }
+        this.flashCell()
+
         this.$root.$on('polled', () => {
-            // Clear the last flashing animation
-            this.flashing = false
+
 
             // Go to the current progress
             window.requestAnimationFrame(() => this.setProgress())
@@ -73,60 +77,51 @@ Vue.component('progress-canvas', {
             this.clearCanvas()
             if (!this.$root.job.file.name) return
             this.drawGrid()
-            return new Promise(res => {
-                // Current cursor position
-                var cur = new class {
-                    constructor(p) {
-                        this.p = p
-                        this.x = 0
-                        this.y = 0
-                        this.max = Math.floor(p.subs.x * p.subs.y * p.completion)
-                    }
-                    get total() { return this.y * this.p.subs.x + (this.y % 2 !== 0 ? this.p.subs.x - this.x : this.x) }
-                    get ratio() { return this.total / this.max }
-                }(this)
 
-                // Flash length in ms
-                let flashLength = 400
-
-                // Recursive flashing function
-                var flashCell = (s = -1) => {
-                    // Set flashing flag on initialize
-                    if (s < 0) this.flashing = true
-
-                    // Fill cell for flash length
-                    if (s > 60 * flashLength / 1000 || this.completion >= 1) this.fillCell(cur.x, cur.y, 1)
-
-                    // Clear cell for flash length
-                    else this.clearCell(cur.x, cur.y)
-
-                    // Increment or reset flash counter
-                    s = s > 60 * 2 * flashLength / 1000 ? 0 : s + 1
-
-                    // If flashing isnt disabled, recursively call this function
-                    if (this.flashing) window.requestAnimationFrame(() => flashCell(s))
+            // Current cursor position
+            var cur = new class {
+                constructor(p) {
+                    this.p = p
+                    this.x = 0
+                    this.y = 0
+                    this.max = Math.floor(p.subs.x * p.subs.y * p.completion)
                 }
+                get total() { return this.y * this.p.subs.x + (this.y % 2 !== 0 ? this.p.subs.x - this.x : this.x) }
+                get ratio() { return this.total / this.max }
+            }(this)
 
-                // Recursive cell painting function
-                var fillCells = () => {
-                    // Fill the current cell
-                    this.fillCell(cur.x, cur.y, cur.ratio)
+            // Flash length in ms
+            let flashLength = 400
 
-                    // Move cursor to new cell
-                    if ((cur.y % 2 && cur.x == 0) || (!(cur.y % 2) && cur.x == this.subs.x)) cur.y++;
-                    else if (cur.y % 2 && cur.x > 0) cur.x--;
-                    else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
+            // Recursive flashing function
+            this.flashCell = () => {
+                // Fill the cell
+                if (new Date().getMilliseconds() > 500) this.fillCell(cur.x, cur.y, 1)
 
-                    this.drawText(this.height - 2 - cur.y * this.subSize, (this.completion * cur.ratio) == NaN ? 0 : (this.completion * cur.ratio))
+                // Clear cell for flash length
+                else this.clearCell(cur.x, cur.y)
 
-                    // Recursively call this function
-                    if (cur.total < cur.max) animate && cur.x % 2 == 0 ? window.requestAnimationFrame(fillCells) : fillCells()
+                // Recurse
+                window.requestAnimationFrame(() => this.flashCell())
+            }
 
-                    // Flash last cell async and resolve promise
-                    else new Promise(() => flashCell()) && res()
-                }
-                fillCells()
-            })
+            // Recursive cell painting function
+            var fillCells = () => {
+                // Fill the current cell
+                this.fillCell(cur.x, cur.y, cur.ratio)
+
+                // Move cursor to new cell
+                if ((cur.y % 2 && cur.x == 0) || (!(cur.y % 2) && cur.x == this.subs.x)) cur.y++;
+                else if (cur.y % 2 && cur.x > 0) cur.x--;
+                else if (!(cur.y % 2) && cur.x < this.subs.x) cur.x++;
+
+                this.drawText(this.height - 2 - cur.y * this.subSize, (this.completion * cur.ratio) == NaN ? 0 : (this.completion * cur.ratio))
+
+                // Recursively call this function
+                if (cur.total < cur.max) animate && cur.x % 2 == 0 ? window.requestAnimationFrame(fillCells) : fillCells()
+                else this.flashCell()
+            }
+            fillCells()
         }
     }
 })
