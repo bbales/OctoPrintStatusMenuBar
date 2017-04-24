@@ -60,7 +60,7 @@ Vue.component('temperature-canvas', {
             [0, 1].forEach(tool => {
                 // Run for setpoint and reading
                 ['target', 'actual'].forEach(t => {
-                    this.ctx.strokeStyle = `${tool ? pur : gre}${t == 'actual' ? 0.6 : 1.0})`
+                    this.ctx.strokeStyle = `${!tool ? pur : gre}${t !== 'actual' ? 0.6 : 1.0})`
                     this.ctx.beginPath()
                     for (let i = 0; i < this.$root.temperature.length; i++) {
                         let coord = calc(this.$root.temperature[i])
