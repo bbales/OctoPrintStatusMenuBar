@@ -11,7 +11,9 @@
   "repository": "https://github.com/bbales/OctoPrintStatusMenuBar",
   "main": "server.js",
   "scripts": {
-    "build": "electron-packager . Example --platform=darwin --arch=x64 --version=0.36.0 --icon=Icon.icns",
+    "build-linux": "electron-packager . OctoPrintStatus --overwrite --prune --platform=linux --arch=x64 --electron-version=1.6.5 --icon=./app/octoprint",
+    "build-osx": "electron-packager . OctoPrintStatus --overwrite --deref-symlinks --platform=darwin --arch=x64 --electron-version=1.6.5 --prune --icon=./app/octoprint",
+    "build": "npm run build-linux; npm run build-osx",
     "start": "electron . ",
     "css": "sass --watch app/scss/main.scss:app/css/main.css"
   },
@@ -28,6 +30,5 @@
     "vue": "^2.1.10"
   },
   "devDependencies": {
-    "electron": "^1.4.15"
   }
 }

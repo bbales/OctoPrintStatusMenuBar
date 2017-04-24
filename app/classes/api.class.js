@@ -73,7 +73,6 @@ class Api {
 
             // Only keep the last 10 minutes
             app.temperature = app.temperature.filter(t => newTemp.ts - t.ts < 300)
-            console.log(app.temperature.length)
         }
     }
 

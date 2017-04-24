@@ -2,13 +2,21 @@ const { ipcMain, shell, app } = require('electron')
 const notifier = require('node-notifier')
 const path = require('path')
 
+const appPath = __dirname
+
 // Create the menubar app
-const mb = require('menubar')({ dir: 'app/', alwaysOnTop: true, preloadWindow: true, height: 250, icon: 'app/icon.png' })
+const mb = require('menubar')({
+    dir: appPath + '/app/',
+    alwaysOnTop: true,
+    preloadWindow: true,
+    height: 250,
+    icon: appPath + '/app/icon.png'
+})
 
 var disableHide = false
 
 mb.on('ready', () => mb.showWindow())
-mb.on('ready', () => mb.window.toggleDevTools())
+// mb.on('ready', () => mb.window.toggleDevTools())
 
 // Hide it when the user clicks away
 mb.on('focus-lost', () => !disableHide && mb.hideWindow())
