@@ -1,4 +1,10 @@
-# OctoPrintStatusMenuBar - Manage OctoPrint from your menu bar
+# OctoPrintStatusMenuBar
+
+Manage OctoPrint from your menu bar.
+
+<div style="text-align:center"><img src ="https://github.com/bbales/OctoPrintStatusMenuBar/blob/master/docs/progress.gif"></div>
+
+<div style="text-align:center"><img src ="https://github.com/bbales/OctoPrintStatusMenuBar/blob/master/docs/upload.gif"></div>
 
 This application provides a handy interface for controlling and monitoring OctoPrint right from your desktop menu bar. 
 
