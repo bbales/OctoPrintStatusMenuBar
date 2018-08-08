@@ -1,7 +1,7 @@
-const { ipcMain, shell, app } = require('electron')
+const { ipcMain, shell, app, Menu } = require('electron')
 const notifier = require('node-notifier')
 const path = require('path')
-
+const defaultMenu = require('electron-default-menu');
 const appPath = __dirname
 
 // Create the menubar app
@@ -15,7 +15,10 @@ const mb = require('menubar')({
 
 var disableHide = false
 
-mb.on('ready', () => mb.showWindow())
+mb.on('ready', () => {
+  Menu.setApplicationMenu(Menu.buildFromTemplate(defaultMenu(app, shell)));
+  mb.showWindow()
+})
 // mb.on('ready', () => mb.window.toggleDevTools())
 
 // Hide it when the user clicks away
