@@ -45,4 +45,4 @@ Setup is fairly straightforward. There are only two required settings, your **Oc
 5. Submit a pull request
 
 ### License
-OctoPrintStatueMenuBar is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
+OctoPrintStatusMenuBar is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
