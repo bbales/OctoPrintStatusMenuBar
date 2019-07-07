@@ -10,7 +10,7 @@ This application provides a handy interface for controlling and monitoring OctoP
 
 ### Preamble
 
-> This application is currently in development. Some feautres may not work properly or as expected. There are many loose ends so feel free to help out! If there is a feature that you would like to see, don't hesitate to make a feature request.
+> This application is currently in development. Some features may not work properly or as expected. There are many loose ends so feel free to help out! If there is a feature that you would like to see, don't hesitate to make a feature request.
 > Cheers,
 > Ben
 
